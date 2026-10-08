@@ -1,0 +1,4884 @@
+{
+ "$defs": {
+  "EntitatRef": {
+   "additionalProperties": false,
+   "properties": {
+    "nif": {
+     "const": "P4315400D",
+     "title": "Nif",
+     "type": "string"
+    }
+   },
+   "required": [
+    "nif"
+   ],
+   "title": "EntitatRef",
+   "type": "object"
+  },
+  "Expedient": {
+   "additionalProperties": false,
+   "properties": {
+    "num": {
+     "anyOf": [
+      {
+       "pattern": "^\\d{10}-\\d{4}-\\d{7}$",
+       "type": "string"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "description": "Número d'expedient del gestor (p. ex. 4315200000-2026-0000642). null si no en té",
+     "title": "Num"
+    },
+    "exercici": {
+     "maximum": 2100,
+     "minimum": 2000,
+     "title": "Exercici",
+     "type": "integer"
+    },
+    "titol": {
+     "minLength": 3,
+     "title": "Titol",
+     "type": "string"
+    },
+    "estat_tramit": {
+     "enum": [
+      "esborrany",
+      "en_tramit",
+      "aprovat_inicial",
+      "aprovat",
+      "publicat",
+      "executat",
+      "arxivat",
+      "anullat"
+     ],
+     "title": "Estat Tramit",
+     "type": "string"
+    },
+    "organ": {
+     "anyOf": [
+      {
+       "enum": [
+        "alcaldia",
+        "ple",
+        "junta_govern"
+       ],
+       "type": "string"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Organ"
+    },
+    "resolucio": {
+     "$ref": "#/$defs/Resolucio"
+    },
+    "fites": {
+     "items": {
+      "$ref": "#/$defs/Fita"
+     },
+     "title": "Fites",
+     "type": "array"
+    }
+   },
+   "required": [
+    "exercici",
+    "titol",
+    "estat_tramit"
+   ],
+   "title": "Expedient",
+   "type": "object"
+  },
+  "Fita": {
+   "additionalProperties": false,
+   "properties": {
+    "fita": {
+     "description": "provisio_inici, informe_intervencio, acord_ple, publicacio_bop, tramesa_ministeri…",
+     "title": "Fita",
+     "type": "string"
+    },
+    "data": {
+     "anyOf": [
+      {
+       "format": "date",
+       "type": "string"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Data"
+    },
+    "estat": {
+     "default": "pendent",
+     "enum": [
+      "pendent",
+      "fet",
+      "no_escau"
+     ],
+     "title": "Estat",
+     "type": "string"
+    },
+    "document": {
+     "anyOf": [
+      {
+       "type": "string"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Document"
+    }
+   },
+   "required": [
+    "fita"
+   ],
+   "title": "Fita",
+   "type": "object"
+  },
+  "FitxerFont": {
+   "additionalProperties": false,
+   "properties": {
+    "ruta": {
+     "title": "Ruta",
+     "type": "string"
+    },
+    "sha256": {
+     "anyOf": [
+      {
+       "type": "string"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Sha256"
+    },
+    "full": {
+     "anyOf": [
+      {
+       "type": "string"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Full"
+    }
+   },
+   "required": [
+    "ruta"
+   ],
+   "title": "FitxerFont",
+   "type": "object"
+  },
+  "Font": {
+   "additionalProperties": false,
+   "properties": {
+    "origen": {
+     "enum": [
+      "claude_code",
+      "cowork",
+      "claude_desktop",
+      "claude_ai",
+      "mcp",
+      "extractor",
+      "manual"
+     ],
+     "title": "Origen",
+     "type": "string"
+    },
+    "sessio": {
+     "anyOf": [
+      {
+       "type": "string"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Sessio"
+    },
+    "generat_el": {
+     "anyOf": [
+      {
+       "format": "date-time",
+       "type": "string"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Generat El"
+    },
+    "fitxers": {
+     "items": {
+      "$ref": "#/$defs/FitxerFont"
+     },
+     "title": "Fitxers",
+     "type": "array"
+    }
+   },
+   "required": [
+    "origen"
+   ],
+   "title": "Font",
+   "type": "object"
+  },
+  "Incoherencia": {
+   "additionalProperties": false,
+   "properties": {
+    "descripcio": {
+     "title": "Descripcio",
+     "type": "string"
+    },
+    "camp": {
+     "anyOf": [
+      {
+       "type": "string"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "description": "Camp afectat, p. ex. romanent_tresoreria.saldo_418",
+     "title": "Camp"
+    },
+    "valors": {
+     "additionalProperties": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+        "type": "string"
+       },
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ]
+     },
+     "title": "Valors",
+     "type": "object"
+    }
+   },
+   "required": [
+    "descripcio"
+   ],
+   "title": "Incoherencia",
+   "type": "object"
+  },
+  "Pendent": {
+   "additionalProperties": false,
+   "properties": {
+    "camp": {
+     "title": "Camp",
+     "type": "string"
+    },
+    "motiu": {
+     "title": "Motiu",
+     "type": "string"
+    }
+   },
+   "required": [
+    "camp",
+    "motiu"
+   ],
+   "title": "Pendent",
+   "type": "object"
+  },
+  "Resolucio": {
+   "additionalProperties": false,
+   "properties": {
+    "num": {
+     "anyOf": [
+      {
+       "type": "string"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Num"
+    },
+    "data": {
+     "anyOf": [
+      {
+       "format": "date",
+       "type": "string"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Data"
+    },
+    "organ": {
+     "anyOf": [
+      {
+       "enum": [
+        "alcaldia",
+        "ple",
+        "junta_govern"
+       ],
+       "type": "string"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Organ"
+    }
+   },
+   "title": "Resolucio",
+   "type": "object"
+  }
+ },
+ "additionalProperties": false,
+ "properties": {
+  "$fitxa": {
+   "const": "torre-finances/expedient@1",
+   "title": "$Fitxa",
+   "type": "string"
+  },
+  "entitat": {
+   "$ref": "#/$defs/EntitatRef"
+  },
+  "tipus": {
+   "enum": [
+    "liquidacio",
+    "pressupost",
+    "modificacio_credit",
+    "pef",
+    "operacio_credit",
+    "tresoreria",
+    "pmp",
+    "control_intern",
+    "compte_general",
+    "tramesa"
+   ],
+   "title": "Tipus",
+   "type": "string"
+  },
+  "expedient": {
+   "$ref": "#/$defs/Expedient"
+  },
+  "font": {
+   "$ref": "#/$defs/Font"
+  },
+  "dades": {
+   "additionalProperties": true,
+   "title": "Dades",
+   "type": "object"
+  },
+  "pendents": {
+   "items": {
+    "$ref": "#/$defs/Pendent"
+   },
+   "title": "Pendents",
+   "type": "array"
+  },
+  "incoherencies": {
+   "items": {
+    "$ref": "#/$defs/Incoherencia"
+   },
+   "title": "Incoherencies",
+   "type": "array"
+  }
+ },
+ "required": [
+  "$fitxa",
+  "entitat",
+  "tipus",
+  "expedient",
+  "font",
+  "dades"
+ ],
+ "title": "torre-finances/expedient@1",
+ "type": "object",
+ "description": "Fitxa estructurada d'un expedient econòmic de l'Ajuntament de la Torre de l'Espanyol. El camp `dades` segueix l'esquema de `dades_per_tipus[tipus]`.",
+ "dades_per_tipus": {
+  "liquidacio": {
+   "$defs": {
+    "AjustSec": {
+     "additionalProperties": false,
+     "properties": {
+      "concepte": {
+       "title": "Concepte",
+       "type": "string"
+      },
+      "import": {
+       "anyOf": [
+        {
+         "type": "number"
+        },
+        {
+         "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,13}|(?=[\\d.]{1,16}0*$)\\d{0,13}\\.\\d{0,2}0*$)",
+         "type": "string"
+        }
+       ],
+       "description": "Import en euros, 2 decimals",
+       "title": "Import"
+      }
+     },
+     "required": [
+      "concepte",
+      "import"
+     ],
+     "title": "AjustSec",
+     "type": "object"
+    },
+    "Bestreta": {
+     "additionalProperties": false,
+     "properties": {
+      "codi": {
+       "title": "Codi",
+       "type": "string"
+      },
+      "import": {
+       "anyOf": [
+        {
+         "type": "number"
+        },
+        {
+         "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,13}|(?=[\\d.]{1,16}0*$)\\d{0,13}\\.\\d{0,2}0*$)",
+         "type": "string"
+        }
+       ],
+       "description": "Import en euros, 2 decimals",
+       "title": "Import"
+      },
+      "estat": {
+       "title": "Estat",
+       "type": "string"
+      },
+      "antiguitat_anys": {
+       "anyOf": [
+        {
+         "type": "integer"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "title": "Antiguitat Anys"
+      }
+     },
+     "required": [
+      "codi",
+      "import",
+      "estat"
+     ],
+     "title": "Bestreta",
+     "type": "object"
+    },
+    "CapitolDespeses": {
+     "additionalProperties": false,
+     "properties": {
+      "capitol": {
+       "maximum": 9,
+       "minimum": 1,
+       "title": "Capitol",
+       "type": "integer"
+      },
+      "credits_definitius": {
+       "anyOf": [
+        {
+         "anyOf": [
+          {
+           "type": "number"
+          },
+          {
+           "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,13}|(?=[\\d.]{1,16}0*$)\\d{0,13}\\.\\d{0,2}0*$)",
+           "type": "string"
+          }
+         ],
+         "description": "Import en euros, 2 decimals"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "title": "Credits Definitius"
+      },
+      "orn": {
+       "anyOf": [
+        {
+         "anyOf": [
+          {
+           "type": "number"
+          },
+          {
+           "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,13}|(?=[\\d.]{1,16}0*$)\\d{0,13}\\.\\d{0,2}0*$)",
+           "type": "string"
+          }
+         ],
+         "description": "Import en euros, 2 decimals"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "title": "Orn"
+      },
+      "pagaments": {
+       "anyOf": [
+        {
+         "anyOf": [
+          {
+           "type": "number"
+          },
+          {
+           "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,13}|(?=[\\d.]{1,16}0*$)\\d{0,13}\\.\\d{0,2}0*$)",
+           "type": "string"
+          }
+         ],
+         "description": "Import en euros, 2 decimals"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "title": "Pagaments"
+      }
+     },
+     "required": [
+      "capitol"
+     ],
+     "title": "CapitolDespeses",
+     "type": "object"
+    },
+    "CapitolIngressos": {
+     "additionalProperties": false,
+     "properties": {
+      "capitol": {
+       "maximum": 9,
+       "minimum": 1,
+       "title": "Capitol",
+       "type": "integer"
+      },
+      "previsions_definitives": {
+       "anyOf": [
+        {
+         "anyOf": [
+          {
+           "type": "number"
+          },
+          {
+           "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,13}|(?=[\\d.]{1,16}0*$)\\d{0,13}\\.\\d{0,2}0*$)",
+           "type": "string"
+          }
+         ],
+         "description": "Import en euros, 2 decimals"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "title": "Previsions Definitives"
+      },
+      "drn": {
+       "anyOf": [
+        {
+         "anyOf": [
+          {
+           "type": "number"
+          },
+          {
+           "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,13}|(?=[\\d.]{1,16}0*$)\\d{0,13}\\.\\d{0,2}0*$)",
+           "type": "string"
+          }
+         ],
+         "description": "Import en euros, 2 decimals"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "title": "Drn"
+      },
+      "recaptacio": {
+       "anyOf": [
+        {
+         "anyOf": [
+          {
+           "type": "number"
+          },
+          {
+           "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,13}|(?=[\\d.]{1,16}0*$)\\d{0,13}\\.\\d{0,2}0*$)",
+           "type": "string"
+          }
+         ],
+         "description": "Import en euros, 2 decimals"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "title": "Recaptacio"
+      }
+     },
+     "required": [
+      "capitol"
+     ],
+     "title": "CapitolIngressos",
+     "type": "object"
+    },
+    "ControlInternLiq": {
+     "additionalProperties": false,
+     "properties": {
+      "font_ref": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "description": "Fitxer + full + cel·la, o document + annex/pàgina",
+       "title": "Font Ref"
+      },
+      "calculats": {
+       "description": "Noms dels camps calculats (no llegits d'una font)",
+       "items": {
+        "type": "string"
+       },
+       "title": "Calculats",
+       "type": "array"
+      },
+      "objeccions": {
+       "anyOf": [
+        {
+         "type": "integer"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "title": "Objeccions"
+      },
+      "omissions_fiscalitzacio": {
+       "anyOf": [
+        {
+         "type": "integer"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "title": "Omissions Fiscalitzacio"
+      },
+      "anomalies_ingressos": {
+       "anyOf": [
+        {
+         "type": "integer"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "title": "Anomalies Ingressos"
+      },
+      "pagaments_justificar_pendents": {
+       "anyOf": [
+        {
+         "type": "integer"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "title": "Pagaments Justificar Pendents"
+      },
+      "bestretes": {
+       "items": {
+        "$ref": "#/$defs/Bestreta"
+       },
+       "title": "Bestretes",
+       "type": "array"
+      },
+      "saldos_a_depurar": {
+       "items": {
+        "$ref": "#/$defs/SaldoDepurar"
+       },
+       "title": "Saldos A Depurar",
+       "type": "array"
+      }
+     },
+     "title": "ControlInternLiq",
+     "type": "object"
+    },
+    "DestiSuperavit": {
+     "additionalProperties": false,
+     "properties": {
+      "font_ref": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "description": "Fitxer + full + cel·la, o document + annex/pàgina",
+       "title": "Font Ref"
+      },
+      "calculats": {
+       "description": "Noms dels camps calculats (no llegits d'una font)",
+       "items": {
+        "type": "string"
+       },
+       "title": "Calculats",
+       "type": "array"
+      },
+      "superavit_estabilitat": {
+       "anyOf": [
+        {
+         "anyOf": [
+          {
+           "type": "number"
+          },
+          {
+           "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,13}|(?=[\\d.]{1,16}0*$)\\d{0,13}\\.\\d{0,2}0*$)",
+           "type": "string"
+          }
+         ],
+         "description": "Import en euros, 2 decimals"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "title": "Superavit Estabilitat"
+      },
+      "rtdg_ajustat": {
+       "anyOf": [
+        {
+         "anyOf": [
+          {
+           "type": "number"
+          },
+          {
+           "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,13}|(?=[\\d.]{1,16}0*$)\\d{0,13}\\.\\d{0,2}0*$)",
+           "type": "string"
+          }
+         ],
+         "description": "Import en euros, 2 decimals"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "title": "Rtdg Ajustat"
+      },
+      "import_amortitzacio": {
+       "anyOf": [
+        {
+         "anyOf": [
+          {
+           "type": "number"
+          },
+          {
+           "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,13}|(?=[\\d.]{1,16}0*$)\\d{0,13}\\.\\d{0,2}0*$)",
+           "type": "string"
+          }
+         ],
+         "description": "Import en euros, 2 decimals"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "title": "Import Amortitzacio"
+      },
+      "import_ifs": {
+       "anyOf": [
+        {
+         "anyOf": [
+          {
+           "type": "number"
+          },
+          {
+           "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,13}|(?=[\\d.]{1,16}0*$)\\d{0,13}\\.\\d{0,2}0*$)",
+           "type": "string"
+          }
+         ],
+         "description": "Import en euros, 2 decimals"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "title": "Import Ifs"
+      },
+      "import_413": {
+       "anyOf": [
+        {
+         "anyOf": [
+          {
+           "type": "number"
+          },
+          {
+           "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,13}|(?=[\\d.]{1,16}0*$)\\d{0,13}\\.\\d{0,2}0*$)",
+           "type": "string"
+          }
+         ],
+         "description": "Import en euros, 2 decimals"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "title": "Import 413"
+      }
+     },
+     "title": "DestiSuperavit",
+     "type": "object"
+    },
+    "DrnOrn": {
+     "additionalProperties": false,
+     "properties": {
+      "drn": {
+       "anyOf": [
+        {
+         "anyOf": [
+          {
+           "type": "number"
+          },
+          {
+           "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,13}|(?=[\\d.]{1,16}0*$)\\d{0,13}\\.\\d{0,2}0*$)",
+           "type": "string"
+          }
+         ],
+         "description": "Import en euros, 2 decimals"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "title": "Drn"
+      },
+      "orn": {
+       "anyOf": [
+        {
+         "anyOf": [
+          {
+           "type": "number"
+          },
+          {
+           "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,13}|(?=[\\d.]{1,16}0*$)\\d{0,13}\\.\\d{0,2}0*$)",
+           "type": "string"
+          }
+         ],
+         "description": "Import en euros, 2 decimals"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "title": "Orn"
+      }
+     },
+     "title": "DrnOrn",
+     "type": "object"
+    },
+    "Endeutament": {
+     "additionalProperties": false,
+     "properties": {
+      "font_ref": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "description": "Fitxer + full + cel·la, o document + annex/pàgina",
+       "title": "Font Ref"
+      },
+      "calculats": {
+       "description": "Noms dels camps calculats (no llegits d'una font)",
+       "items": {
+        "type": "string"
+       },
+       "title": "Calculats",
+       "type": "array"
+      },
+      "deute_viu_llarg": {
+       "anyOf": [
+        {
+         "anyOf": [
+          {
+           "type": "number"
+          },
+          {
+           "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,13}|(?=[\\d.]{1,16}0*$)\\d{0,13}\\.\\d{0,2}0*$)",
+           "type": "string"
+          }
+         ],
+         "description": "Import en euros, 2 decimals"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "title": "Deute Viu Llarg"
+      },
+      "deute_viu_curt": {
+       "anyOf": [
+        {
+         "anyOf": [
+          {
+           "type": "number"
+          },
+          {
+           "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,13}|(?=[\\d.]{1,16}0*$)\\d{0,13}\\.\\d{0,2}0*$)",
+           "type": "string"
+          }
+         ],
+         "description": "Import en euros, 2 decimals"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "title": "Deute Viu Curt"
+      },
+      "deute_viu_total": {
+       "anyOf": [
+        {
+         "anyOf": [
+          {
+           "type": "number"
+          },
+          {
+           "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,13}|(?=[\\d.]{1,16}0*$)\\d{0,13}\\.\\d{0,2}0*$)",
+           "type": "string"
+          }
+         ],
+         "description": "Import en euros, 2 decimals"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "title": "Deute Viu Total"
+      },
+      "ratio_deute_viu_pct": {
+       "anyOf": [
+        {
+         "anyOf": [
+          {
+           "type": "number"
+          },
+          {
+           "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,5}|(?=[\\d.]{1,10}0*$)\\d{0,5}\\.\\d{0,4}0*$)",
+           "type": "string"
+          }
+         ],
+         "description": "Tant per cent (21.2914 = 21,2914 %)"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "title": "Ratio Deute Viu Pct"
+      }
+     },
+     "title": "Endeutament",
+     "type": "object"
+    },
+    "Estabilitat": {
+     "additionalProperties": false,
+     "properties": {
+      "font_ref": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "description": "Fitxer + full + cel·la, o document + annex/pàgina",
+       "title": "Font Ref"
+      },
+      "calculats": {
+       "description": "Noms dels camps calculats (no llegits d'una font)",
+       "items": {
+        "type": "string"
+       },
+       "title": "Calculats",
+       "type": "array"
+      },
+      "ingressos_no_financers": {
+       "anyOf": [
+        {
+         "anyOf": [
+          {
+           "type": "number"
+          },
+          {
+           "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,13}|(?=[\\d.]{1,16}0*$)\\d{0,13}\\.\\d{0,2}0*$)",
+           "type": "string"
+          }
+         ],
+         "description": "Import en euros, 2 decimals"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "title": "Ingressos No Financers"
+      },
+      "despeses_no_financeres": {
+       "anyOf": [
+        {
+         "anyOf": [
+          {
+           "type": "number"
+          },
+          {
+           "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,13}|(?=[\\d.]{1,16}0*$)\\d{0,13}\\.\\d{0,2}0*$)",
+           "type": "string"
+          }
+         ],
+         "description": "Import en euros, 2 decimals"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "title": "Despeses No Financeres"
+      },
+      "ajustos_sec": {
+       "items": {
+        "$ref": "#/$defs/AjustSec"
+       },
+       "title": "Ajustos Sec",
+       "type": "array"
+      },
+      "capacitat_financament": {
+       "anyOf": [
+        {
+         "anyOf": [
+          {
+           "type": "number"
+          },
+          {
+           "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,13}|(?=[\\d.]{1,16}0*$)\\d{0,13}\\.\\d{0,2}0*$)",
+           "type": "string"
+          }
+         ],
+         "description": "Import en euros, 2 decimals"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "description": "Positiu = capacitat; negatiu = necessitat",
+       "title": "Capacitat Financament"
+      }
+     },
+     "title": "Estabilitat",
+     "type": "object"
+    },
+    "EstalviNet": {
+     "additionalProperties": false,
+     "properties": {
+      "font_ref": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "description": "Fitxer + full + cel·la, o document + annex/pàgina",
+       "title": "Font Ref"
+      },
+      "calculats": {
+       "description": "Noms dels camps calculats (no llegits d'una font)",
+       "items": {
+        "type": "string"
+       },
+       "title": "Calculats",
+       "type": "array"
+      },
+      "ingressos_corrents": {
+       "anyOf": [
+        {
+         "anyOf": [
+          {
+           "type": "number"
+          },
+          {
+           "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,13}|(?=[\\d.]{1,16}0*$)\\d{0,13}\\.\\d{0,2}0*$)",
+           "type": "string"
+          }
+         ],
+         "description": "Import en euros, 2 decimals"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "title": "Ingressos Corrents"
+      },
+      "ingressos_extraordinaris": {
+       "anyOf": [
+        {
+         "anyOf": [
+          {
+           "type": "number"
+          },
+          {
+           "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,13}|(?=[\\d.]{1,16}0*$)\\d{0,13}\\.\\d{0,2}0*$)",
+           "type": "string"
+          }
+         ],
+         "description": "Import en euros, 2 decimals"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "title": "Ingressos Extraordinaris"
+      },
+      "ingressos_corrents_ajustats": {
+       "anyOf": [
+        {
+         "anyOf": [
+          {
+           "type": "number"
+          },
+          {
+           "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,13}|(?=[\\d.]{1,16}0*$)\\d{0,13}\\.\\d{0,2}0*$)",
+           "type": "string"
+          }
+         ],
+         "description": "Import en euros, 2 decimals"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "title": "Ingressos Corrents Ajustats"
+      },
+      "despeses_corrents_1_2_4": {
+       "anyOf": [
+        {
+         "anyOf": [
+          {
+           "type": "number"
+          },
+          {
+           "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,13}|(?=[\\d.]{1,16}0*$)\\d{0,13}\\.\\d{0,2}0*$)",
+           "type": "string"
+          }
+         ],
+         "description": "Import en euros, 2 decimals"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "title": "Despeses Corrents 1 2 4"
+      },
+      "anualitat_teorica": {
+       "anyOf": [
+        {
+         "anyOf": [
+          {
+           "type": "number"
+          },
+          {
+           "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,13}|(?=[\\d.]{1,16}0*$)\\d{0,13}\\.\\d{0,2}0*$)",
+           "type": "string"
+          }
+         ],
+         "description": "Import en euros, 2 decimals"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "title": "Anualitat Teorica"
+      },
+      "estalvi_net": {
+       "anyOf": [
+        {
+         "anyOf": [
+          {
+           "type": "number"
+          },
+          {
+           "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,13}|(?=[\\d.]{1,16}0*$)\\d{0,13}\\.\\d{0,2}0*$)",
+           "type": "string"
+          }
+         ],
+         "description": "Import en euros, 2 decimals"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "title": "Estalvi Net"
+      },
+      "estalvi_net_ajustat": {
+       "anyOf": [
+        {
+         "anyOf": [
+          {
+           "type": "number"
+          },
+          {
+           "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,13}|(?=[\\d.]{1,16}0*$)\\d{0,13}\\.\\d{0,2}0*$)",
+           "type": "string"
+          }
+         ],
+         "description": "Import en euros, 2 decimals"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "title": "Estalvi Net Ajustat"
+      }
+     },
+     "title": "EstalviNet",
+     "type": "object"
+    },
+    "ExecucioDespeses": {
+     "additionalProperties": false,
+     "properties": {
+      "font_ref": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "description": "Fitxer + full + cel·la, o document + annex/pàgina",
+       "title": "Font Ref"
+      },
+      "calculats": {
+       "description": "Noms dels camps calculats (no llegits d'una font)",
+       "items": {
+        "type": "string"
+       },
+       "title": "Calculats",
+       "type": "array"
+      },
+      "credits_inicials": {
+       "anyOf": [
+        {
+         "anyOf": [
+          {
+           "type": "number"
+          },
+          {
+           "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,13}|(?=[\\d.]{1,16}0*$)\\d{0,13}\\.\\d{0,2}0*$)",
+           "type": "string"
+          }
+         ],
+         "description": "Import en euros, 2 decimals"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "title": "Credits Inicials"
+      },
+      "modificacions": {
+       "anyOf": [
+        {
+         "anyOf": [
+          {
+           "type": "number"
+          },
+          {
+           "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,13}|(?=[\\d.]{1,16}0*$)\\d{0,13}\\.\\d{0,2}0*$)",
+           "type": "string"
+          }
+         ],
+         "description": "Import en euros, 2 decimals"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "title": "Modificacions"
+      },
+      "credits_definitius": {
+       "anyOf": [
+        {
+         "anyOf": [
+          {
+           "type": "number"
+          },
+          {
+           "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,13}|(?=[\\d.]{1,16}0*$)\\d{0,13}\\.\\d{0,2}0*$)",
+           "type": "string"
+          }
+         ],
+         "description": "Import en euros, 2 decimals"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "title": "Credits Definitius"
+      },
+      "autoritzat": {
+       "anyOf": [
+        {
+         "anyOf": [
+          {
+           "type": "number"
+          },
+          {
+           "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,13}|(?=[\\d.]{1,16}0*$)\\d{0,13}\\.\\d{0,2}0*$)",
+           "type": "string"
+          }
+         ],
+         "description": "Import en euros, 2 decimals"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "title": "Autoritzat"
+      },
+      "compromes": {
+       "anyOf": [
+        {
+         "anyOf": [
+          {
+           "type": "number"
+          },
+          {
+           "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,13}|(?=[\\d.]{1,16}0*$)\\d{0,13}\\.\\d{0,2}0*$)",
+           "type": "string"
+          }
+         ],
+         "description": "Import en euros, 2 decimals"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "title": "Compromes"
+      },
+      "orn": {
+       "anyOf": [
+        {
+         "anyOf": [
+          {
+           "type": "number"
+          },
+          {
+           "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,13}|(?=[\\d.]{1,16}0*$)\\d{0,13}\\.\\d{0,2}0*$)",
+           "type": "string"
+          }
+         ],
+         "description": "Import en euros, 2 decimals"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "title": "Orn"
+      },
+      "ordenat": {
+       "anyOf": [
+        {
+         "anyOf": [
+          {
+           "type": "number"
+          },
+          {
+           "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,13}|(?=[\\d.]{1,16}0*$)\\d{0,13}\\.\\d{0,2}0*$)",
+           "type": "string"
+          }
+         ],
+         "description": "Import en euros, 2 decimals"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "title": "Ordenat"
+      },
+      "pagaments": {
+       "anyOf": [
+        {
+         "anyOf": [
+          {
+           "type": "number"
+          },
+          {
+           "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,13}|(?=[\\d.]{1,16}0*$)\\d{0,13}\\.\\d{0,2}0*$)",
+           "type": "string"
+          }
+         ],
+         "description": "Import en euros, 2 decimals"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "title": "Pagaments"
+      },
+      "pendent_pagament": {
+       "anyOf": [
+        {
+         "anyOf": [
+          {
+           "type": "number"
+          },
+          {
+           "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,13}|(?=[\\d.]{1,16}0*$)\\d{0,13}\\.\\d{0,2}0*$)",
+           "type": "string"
+          }
+         ],
+         "description": "Import en euros, 2 decimals"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "title": "Pendent Pagament"
+      },
+      "per_capitol": {
+       "items": {
+        "$ref": "#/$defs/CapitolDespeses"
+       },
+       "title": "Per Capitol",
+       "type": "array"
+      }
+     },
+     "title": "ExecucioDespeses",
+     "type": "object"
+    },
+    "ExecucioIngressos": {
+     "additionalProperties": false,
+     "properties": {
+      "font_ref": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "description": "Fitxer + full + cel·la, o document + annex/pàgina",
+       "title": "Font Ref"
+      },
+      "calculats": {
+       "description": "Noms dels camps calculats (no llegits d'una font)",
+       "items": {
+        "type": "string"
+       },
+       "title": "Calculats",
+       "type": "array"
+      },
+      "previsions_inicials": {
+       "anyOf": [
+        {
+         "anyOf": [
+          {
+           "type": "number"
+          },
+          {
+           "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,13}|(?=[\\d.]{1,16}0*$)\\d{0,13}\\.\\d{0,2}0*$)",
+           "type": "string"
+          }
+         ],
+         "description": "Import en euros, 2 decimals"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "title": "Previsions Inicials"
+      },
+      "modificacions": {
+       "anyOf": [
+        {
+         "anyOf": [
+          {
+           "type": "number"
+          },
+          {
+           "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,13}|(?=[\\d.]{1,16}0*$)\\d{0,13}\\.\\d{0,2}0*$)",
+           "type": "string"
+          }
+         ],
+         "description": "Import en euros, 2 decimals"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "title": "Modificacions"
+      },
+      "previsions_definitives": {
+       "anyOf": [
+        {
+         "anyOf": [
+          {
+           "type": "number"
+          },
+          {
+           "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,13}|(?=[\\d.]{1,16}0*$)\\d{0,13}\\.\\d{0,2}0*$)",
+           "type": "string"
+          }
+         ],
+         "description": "Import en euros, 2 decimals"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "title": "Previsions Definitives"
+      },
+      "drn": {
+       "anyOf": [
+        {
+         "anyOf": [
+          {
+           "type": "number"
+          },
+          {
+           "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,13}|(?=[\\d.]{1,16}0*$)\\d{0,13}\\.\\d{0,2}0*$)",
+           "type": "string"
+          }
+         ],
+         "description": "Import en euros, 2 decimals"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "title": "Drn"
+      },
+      "recaptacio_neta": {
+       "anyOf": [
+        {
+         "anyOf": [
+          {
+           "type": "number"
+          },
+          {
+           "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,13}|(?=[\\d.]{1,16}0*$)\\d{0,13}\\.\\d{0,2}0*$)",
+           "type": "string"
+          }
+         ],
+         "description": "Import en euros, 2 decimals"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "title": "Recaptacio Neta"
+      },
+      "pendent_cobrament": {
+       "anyOf": [
+        {
+         "anyOf": [
+          {
+           "type": "number"
+          },
+          {
+           "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,13}|(?=[\\d.]{1,16}0*$)\\d{0,13}\\.\\d{0,2}0*$)",
+           "type": "string"
+          }
+         ],
+         "description": "Import en euros, 2 decimals"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "title": "Pendent Cobrament"
+      },
+      "per_capitol": {
+       "items": {
+        "$ref": "#/$defs/CapitolIngressos"
+       },
+       "title": "Per Capitol",
+       "type": "array"
+      }
+     },
+     "title": "ExecucioIngressos",
+     "type": "object"
+    },
+    "PmpBloc": {
+     "additionalProperties": false,
+     "properties": {
+      "font_ref": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "description": "Fitxer + full + cel·la, o document + annex/pàgina",
+       "title": "Font Ref"
+      },
+      "calculats": {
+       "description": "Noms dels camps calculats (no llegits d'una font)",
+       "items": {
+        "type": "string"
+       },
+       "title": "Calculats",
+       "type": "array"
+      },
+      "pmp_dies": {
+       "anyOf": [
+        {
+         "type": "number"
+        },
+        {
+         "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,5}|(?=[\\d.]{1,8}0*$)\\d{0,5}\\.\\d{0,2}0*$)",
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "title": "Pmp Dies"
+      },
+      "periode_referencia": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "title": "Periode Referencia"
+      }
+     },
+     "title": "PmpBloc",
+     "type": "object"
+    },
+    "ReglaDespesa": {
+     "additionalProperties": false,
+     "properties": {
+      "font_ref": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "description": "Fitxer + full + cel·la, o document + annex/pàgina",
+       "title": "Font Ref"
+      },
+      "calculats": {
+       "description": "Noms dels camps calculats (no llegits d'una font)",
+       "items": {
+        "type": "string"
+       },
+       "title": "Calculats",
+       "type": "array"
+      },
+      "despesa_computable_n_1": {
+       "anyOf": [
+        {
+         "anyOf": [
+          {
+           "type": "number"
+          },
+          {
+           "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,13}|(?=[\\d.]{1,16}0*$)\\d{0,13}\\.\\d{0,2}0*$)",
+           "type": "string"
+          }
+         ],
+         "description": "Import en euros, 2 decimals"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "title": "Despesa Computable N 1"
+      },
+      "taxa_referencia": {
+       "anyOf": [
+        {
+         "anyOf": [
+          {
+           "type": "number"
+          },
+          {
+           "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,5}|(?=[\\d.]{1,10}0*$)\\d{0,5}\\.\\d{0,4}0*$)",
+           "type": "string"
+          }
+         ],
+         "description": "Tant per cent (21.2914 = 21,2914 %)"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "title": "Taxa Referencia"
+      },
+      "limit_n": {
+       "anyOf": [
+        {
+         "anyOf": [
+          {
+           "type": "number"
+          },
+          {
+           "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,13}|(?=[\\d.]{1,16}0*$)\\d{0,13}\\.\\d{0,2}0*$)",
+           "type": "string"
+          }
+         ],
+         "description": "Import en euros, 2 decimals"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "title": "Limit N"
+      },
+      "augments_permanents": {
+       "anyOf": [
+        {
+         "anyOf": [
+          {
+           "type": "number"
+          },
+          {
+           "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,13}|(?=[\\d.]{1,16}0*$)\\d{0,13}\\.\\d{0,2}0*$)",
+           "type": "string"
+          }
+         ],
+         "description": "Import en euros, 2 decimals"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "title": "Augments Permanents"
+      },
+      "disminucions_permanents": {
+       "anyOf": [
+        {
+         "anyOf": [
+          {
+           "type": "number"
+          },
+          {
+           "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,13}|(?=[\\d.]{1,16}0*$)\\d{0,13}\\.\\d{0,2}0*$)",
+           "type": "string"
+          }
+         ],
+         "description": "Import en euros, 2 decimals"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "title": "Disminucions Permanents"
+      },
+      "despesa_computable_n": {
+       "anyOf": [
+        {
+         "anyOf": [
+          {
+           "type": "number"
+          },
+          {
+           "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,13}|(?=[\\d.]{1,16}0*$)\\d{0,13}\\.\\d{0,2}0*$)",
+           "type": "string"
+          }
+         ],
+         "description": "Import en euros, 2 decimals"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "title": "Despesa Computable N"
+      },
+      "marge": {
+       "anyOf": [
+        {
+         "anyOf": [
+          {
+           "type": "number"
+          },
+          {
+           "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,13}|(?=[\\d.]{1,16}0*$)\\d{0,13}\\.\\d{0,2}0*$)",
+           "type": "string"
+          }
+         ],
+         "description": "Import en euros, 2 decimals"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "description": "limit_n − despesa_computable_n (negatiu = incompliment)",
+       "title": "Marge"
+      },
+      "variacio_interanual_pct": {
+       "anyOf": [
+        {
+         "anyOf": [
+          {
+           "type": "number"
+          },
+          {
+           "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,5}|(?=[\\d.]{1,10}0*$)\\d{0,5}\\.\\d{0,4}0*$)",
+           "type": "string"
+          }
+         ],
+         "description": "Tant per cent (21.2914 = 21,2914 %)"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "description": "despesa_computable_n / despesa_computable_n_1 − 1",
+       "title": "Variacio Interanual Pct"
+      },
+      "exces_sobre_limit_pct": {
+       "anyOf": [
+        {
+         "anyOf": [
+          {
+           "type": "number"
+          },
+          {
+           "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,5}|(?=[\\d.]{1,10}0*$)\\d{0,5}\\.\\d{0,4}0*$)",
+           "type": "string"
+          }
+         ],
+         "description": "Tant per cent (21.2914 = 21,2914 %)"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "description": "despesa_computable_n / limit_n − 1",
+       "title": "Exces Sobre Limit Pct"
+      },
+      "compleix": {
+       "anyOf": [
+        {
+         "type": "boolean"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "title": "Compleix"
+      }
+     },
+     "title": "ReglaDespesa",
+     "type": "object"
+    },
+    "ResultatPressupostari": {
+     "additionalProperties": false,
+     "properties": {
+      "font_ref": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "description": "Fitxer + full + cel·la, o document + annex/pàgina",
+       "title": "Font Ref"
+      },
+      "calculats": {
+       "description": "Noms dels camps calculats (no llegits d'una font)",
+       "items": {
+        "type": "string"
+       },
+       "title": "Calculats",
+       "type": "array"
+      },
+      "operacions_corrents": {
+       "anyOf": [
+        {
+         "$ref": "#/$defs/DrnOrn"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null
+      },
+      "operacions_capital": {
+       "anyOf": [
+        {
+         "$ref": "#/$defs/DrnOrn"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null
+      },
+      "actius_financers": {
+       "anyOf": [
+        {
+         "$ref": "#/$defs/DrnOrn"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null
+      },
+      "passius_financers": {
+       "anyOf": [
+        {
+         "$ref": "#/$defs/DrnOrn"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null
+      },
+      "rp": {
+       "anyOf": [
+        {
+         "anyOf": [
+          {
+           "type": "number"
+          },
+          {
+           "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,13}|(?=[\\d.]{1,16}0*$)\\d{0,13}\\.\\d{0,2}0*$)",
+           "type": "string"
+          }
+         ],
+         "description": "Import en euros, 2 decimals"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "title": "Rp"
+      },
+      "ajust_despeses_rtdg": {
+       "anyOf": [
+        {
+         "anyOf": [
+          {
+           "type": "number"
+          },
+          {
+           "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,13}|(?=[\\d.]{1,16}0*$)\\d{0,13}\\.\\d{0,2}0*$)",
+           "type": "string"
+          }
+         ],
+         "description": "Import en euros, 2 decimals"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "description": "Obligacions finançades amb RTDG (suma)",
+       "title": "Ajust Despeses Rtdg"
+      },
+      "ajust_desviacions_negatives": {
+       "anyOf": [
+        {
+         "anyOf": [
+          {
+           "type": "number"
+          },
+          {
+           "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,13}|(?=[\\d.]{1,16}0*$)\\d{0,13}\\.\\d{0,2}0*$)",
+           "type": "string"
+          }
+         ],
+         "description": "Import en euros, 2 decimals"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "description": "Desviacions de finançament negatives (suma)",
+       "title": "Ajust Desviacions Negatives"
+      },
+      "ajust_desviacions_positives": {
+       "anyOf": [
+        {
+         "anyOf": [
+          {
+           "type": "number"
+          },
+          {
+           "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,13}|(?=[\\d.]{1,16}0*$)\\d{0,13}\\.\\d{0,2}0*$)",
+           "type": "string"
+          }
+         ],
+         "description": "Import en euros, 2 decimals"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "description": "Desviacions de finançament positives (resta)",
+       "title": "Ajust Desviacions Positives"
+      },
+      "rp_ajustat": {
+       "anyOf": [
+        {
+         "anyOf": [
+          {
+           "type": "number"
+          },
+          {
+           "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,13}|(?=[\\d.]{1,16}0*$)\\d{0,13}\\.\\d{0,2}0*$)",
+           "type": "string"
+          }
+         ],
+         "description": "Import en euros, 2 decimals"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "title": "Rp Ajustat"
+      }
+     },
+     "title": "ResultatPressupostari",
+     "type": "object"
+    },
+    "RomanentTresoreria": {
+     "additionalProperties": false,
+     "properties": {
+      "font_ref": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "description": "Fitxer + full + cel·la, o document + annex/pàgina",
+       "title": "Font Ref"
+      },
+      "calculats": {
+       "description": "Noms dels camps calculats (no llegits d'una font)",
+       "items": {
+        "type": "string"
+       },
+       "title": "Calculats",
+       "type": "array"
+      },
+      "fons_liquids": {
+       "anyOf": [
+        {
+         "anyOf": [
+          {
+           "type": "number"
+          },
+          {
+           "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,13}|(?=[\\d.]{1,16}0*$)\\d{0,13}\\.\\d{0,2}0*$)",
+           "type": "string"
+          }
+         ],
+         "description": "Import en euros, 2 decimals"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "title": "Fons Liquids"
+      },
+      "drets_pendents_total": {
+       "anyOf": [
+        {
+         "anyOf": [
+          {
+           "type": "number"
+          },
+          {
+           "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,13}|(?=[\\d.]{1,16}0*$)\\d{0,13}\\.\\d{0,2}0*$)",
+           "type": "string"
+          }
+         ],
+         "description": "Import en euros, 2 decimals"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "title": "Drets Pendents Total"
+      },
+      "obligacions_pendents_total": {
+       "anyOf": [
+        {
+         "anyOf": [
+          {
+           "type": "number"
+          },
+          {
+           "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,13}|(?=[\\d.]{1,16}0*$)\\d{0,13}\\.\\d{0,2}0*$)",
+           "type": "string"
+          }
+         ],
+         "description": "Import en euros, 2 decimals"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "title": "Obligacions Pendents Total"
+      },
+      "partides_pendents_aplicacio": {
+       "anyOf": [
+        {
+         "anyOf": [
+          {
+           "type": "number"
+          },
+          {
+           "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,13}|(?=[\\d.]{1,16}0*$)\\d{0,13}\\.\\d{0,2}0*$)",
+           "type": "string"
+          }
+         ],
+         "description": "Import en euros, 2 decimals"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "description": "Component 4 de l'estat del romanent: cobraments pendents d'aplicació (−) i pagaments pendents d'aplicació (+)",
+       "title": "Partides Pendents Aplicacio"
+      },
+      "rt_total": {
+       "anyOf": [
+        {
+         "anyOf": [
+          {
+           "type": "number"
+          },
+          {
+           "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,13}|(?=[\\d.]{1,16}0*$)\\d{0,13}\\.\\d{0,2}0*$)",
+           "type": "string"
+          }
+         ],
+         "description": "Import en euros, 2 decimals"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "title": "Rt Total"
+      },
+      "saldos_dubtos_cobrament": {
+       "anyOf": [
+        {
+         "anyOf": [
+          {
+           "type": "number"
+          },
+          {
+           "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,13}|(?=[\\d.]{1,16}0*$)\\d{0,13}\\.\\d{0,2}0*$)",
+           "type": "string"
+          }
+         ],
+         "description": "Import en euros, 2 decimals"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "title": "Saldos Dubtos Cobrament"
+      },
+      "exces_financament_afectat": {
+       "anyOf": [
+        {
+         "anyOf": [
+          {
+           "type": "number"
+          },
+          {
+           "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,13}|(?=[\\d.]{1,16}0*$)\\d{0,13}\\.\\d{0,2}0*$)",
+           "type": "string"
+          }
+         ],
+         "description": "Import en euros, 2 decimals"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "title": "Exces Financament Afectat"
+      },
+      "rtdg": {
+       "anyOf": [
+        {
+         "anyOf": [
+          {
+           "type": "number"
+          },
+          {
+           "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,13}|(?=[\\d.]{1,16}0*$)\\d{0,13}\\.\\d{0,2}0*$)",
+           "type": "string"
+          }
+         ],
+         "description": "Import en euros, 2 decimals"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "title": "Rtdg"
+      },
+      "saldo_413": {
+       "anyOf": [
+        {
+         "anyOf": [
+          {
+           "type": "number"
+          },
+          {
+           "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,13}|(?=[\\d.]{1,16}0*$)\\d{0,13}\\.\\d{0,2}0*$)",
+           "type": "string"
+          }
+         ],
+         "description": "Import en euros, 2 decimals"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "title": "Saldo 413"
+      },
+      "saldo_418": {
+       "anyOf": [
+        {
+         "anyOf": [
+          {
+           "type": "number"
+          },
+          {
+           "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,13}|(?=[\\d.]{1,16}0*$)\\d{0,13}\\.\\d{0,2}0*$)",
+           "type": "string"
+          }
+         ],
+         "description": "Import en euros, 2 decimals"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "title": "Saldo 418"
+      },
+      "rtdg_ajustat": {
+       "anyOf": [
+        {
+         "anyOf": [
+          {
+           "type": "number"
+          },
+          {
+           "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,13}|(?=[\\d.]{1,16}0*$)\\d{0,13}\\.\\d{0,2}0*$)",
+           "type": "string"
+          }
+         ],
+         "description": "Import en euros, 2 decimals"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "title": "Rtdg Ajustat"
+      }
+     },
+     "title": "RomanentTresoreria",
+     "type": "object"
+    },
+    "RomanentsCredit": {
+     "additionalProperties": false,
+     "properties": {
+      "font_ref": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "description": "Fitxer + full + cel·la, o document + annex/pàgina",
+       "title": "Font Ref"
+      },
+      "calculats": {
+       "description": "Noms dels camps calculats (no llegits d'una font)",
+       "items": {
+        "type": "string"
+       },
+       "title": "Calculats",
+       "type": "array"
+      },
+      "total": {
+       "anyOf": [
+        {
+         "anyOf": [
+          {
+           "type": "number"
+          },
+          {
+           "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,13}|(?=[\\d.]{1,16}0*$)\\d{0,13}\\.\\d{0,2}0*$)",
+           "type": "string"
+          }
+         ],
+         "description": "Import en euros, 2 decimals"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "title": "Total"
+      },
+      "incorporacio_obligatoria": {
+       "anyOf": [
+        {
+         "anyOf": [
+          {
+           "type": "number"
+          },
+          {
+           "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,13}|(?=[\\d.]{1,16}0*$)\\d{0,13}\\.\\d{0,2}0*$)",
+           "type": "string"
+          }
+         ],
+         "description": "Import en euros, 2 decimals"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "title": "Incorporacio Obligatoria"
+      },
+      "incorporacio_voluntaria": {
+       "anyOf": [
+        {
+         "anyOf": [
+          {
+           "type": "number"
+          },
+          {
+           "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,13}|(?=[\\d.]{1,16}0*$)\\d{0,13}\\.\\d{0,2}0*$)",
+           "type": "string"
+          }
+         ],
+         "description": "Import en euros, 2 decimals"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "title": "Incorporacio Voluntaria"
+      },
+      "no_incorporables": {
+       "anyOf": [
+        {
+         "anyOf": [
+          {
+           "type": "number"
+          },
+          {
+           "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,13}|(?=[\\d.]{1,16}0*$)\\d{0,13}\\.\\d{0,2}0*$)",
+           "type": "string"
+          }
+         ],
+         "description": "Import en euros, 2 decimals"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "title": "No Incorporables"
+      }
+     },
+     "title": "RomanentsCredit",
+     "type": "object"
+    },
+    "SaldoDepurar": {
+     "additionalProperties": false,
+     "properties": {
+      "compte": {
+       "title": "Compte",
+       "type": "string"
+      },
+      "import": {
+       "anyOf": [
+        {
+         "type": "number"
+        },
+        {
+         "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,13}|(?=[\\d.]{1,16}0*$)\\d{0,13}\\.\\d{0,2}0*$)",
+         "type": "string"
+        }
+       ],
+       "description": "Import en euros, 2 decimals",
+       "title": "Import"
+      },
+      "nota": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "title": "Nota"
+      }
+     },
+     "required": [
+      "compte",
+      "import"
+     ],
+     "title": "SaldoDepurar",
+     "type": "object"
+    }
+   },
+   "additionalProperties": false,
+   "properties": {
+    "execucio_ingressos": {
+     "anyOf": [
+      {
+       "$ref": "#/$defs/ExecucioIngressos"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null
+    },
+    "execucio_despeses": {
+     "anyOf": [
+      {
+       "$ref": "#/$defs/ExecucioDespeses"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null
+    },
+    "resultat_pressupostari": {
+     "anyOf": [
+      {
+       "$ref": "#/$defs/ResultatPressupostari"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null
+    },
+    "romanent_tresoreria": {
+     "anyOf": [
+      {
+       "$ref": "#/$defs/RomanentTresoreria"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null
+    },
+    "romanents_credit": {
+     "anyOf": [
+      {
+       "$ref": "#/$defs/RomanentsCredit"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null
+    },
+    "estabilitat": {
+     "anyOf": [
+      {
+       "$ref": "#/$defs/Estabilitat"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null
+    },
+    "regla_despesa": {
+     "anyOf": [
+      {
+       "$ref": "#/$defs/ReglaDespesa"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null
+    },
+    "estalvi_net": {
+     "anyOf": [
+      {
+       "$ref": "#/$defs/EstalviNet"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null
+    },
+    "endeutament": {
+     "anyOf": [
+      {
+       "$ref": "#/$defs/Endeutament"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null
+    },
+    "pmp": {
+     "anyOf": [
+      {
+       "$ref": "#/$defs/PmpBloc"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null
+    },
+    "control_intern": {
+     "anyOf": [
+      {
+       "$ref": "#/$defs/ControlInternLiq"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null
+    },
+    "desti_superavit": {
+     "anyOf": [
+      {
+       "$ref": "#/$defs/DestiSuperavit"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null
+    }
+   },
+   "title": "DadesLiquidacio",
+   "type": "object"
+  },
+  "operacio_credit": {
+   "$defs": {
+    "BaseRatio": {
+     "additionalProperties": false,
+     "properties": {
+      "ingressos_corrents": {
+       "anyOf": [
+        {
+         "type": "number"
+        },
+        {
+         "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,13}|(?=[\\d.]{1,16}0*$)\\d{0,13}\\.\\d{0,2}0*$)",
+         "type": "string"
+        }
+       ],
+       "description": "Import en euros, 2 decimals",
+       "title": "Ingressos Corrents"
+      },
+      "exercici_base": {
+       "title": "Exercici Base",
+       "type": "integer"
+      }
+     },
+     "required": [
+      "ingressos_corrents",
+      "exercici_base"
+     ],
+     "title": "BaseRatio",
+     "type": "object"
+    },
+    "Comunicacio": {
+     "additionalProperties": false,
+     "properties": {
+      "desti": {
+       "description": "ministeri_art17_om, generalitat_ct_art5_ecf138, generalitat_art4_ecf138…",
+       "title": "Desti",
+       "type": "string"
+      },
+      "data": {
+       "anyOf": [
+        {
+         "format": "date",
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "title": "Data"
+      },
+      "justificant": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "title": "Justificant"
+      }
+     },
+     "required": [
+      "desti"
+     ],
+     "title": "Comunicacio",
+     "type": "object"
+    },
+    "CostTotalMaxim": {
+     "additionalProperties": false,
+     "properties": {
+      "index": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "title": "Index"
+      },
+      "diferencial_pct": {
+       "anyOf": [
+        {
+         "anyOf": [
+          {
+           "type": "number"
+          },
+          {
+           "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,5}|(?=[\\d.]{1,10}0*$)\\d{0,5}\\.\\d{0,4}0*$)",
+           "type": "string"
+          }
+         ],
+         "description": "Tant per cent (21.2914 = 21,2914 %)"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "title": "Diferencial Pct"
+      },
+      "index_valor_pct": {
+       "anyOf": [
+        {
+         "anyOf": [
+          {
+           "type": "number"
+          },
+          {
+           "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,5}|(?=[\\d.]{1,10}0*$)\\d{0,5}\\.\\d{0,4}0*$)",
+           "type": "string"
+          }
+         ],
+         "description": "Tant per cent (21.2914 = 21,2914 %)"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "title": "Index Valor Pct"
+      },
+      "data_index": {
+       "anyOf": [
+        {
+         "format": "date",
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "title": "Data Index"
+      },
+      "total_pct": {
+       "anyOf": [
+        {
+         "anyOf": [
+          {
+           "type": "number"
+          },
+          {
+           "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,5}|(?=[\\d.]{1,10}0*$)\\d{0,5}\\.\\d{0,4}0*$)",
+           "type": "string"
+          }
+         ],
+         "description": "Tant per cent (21.2914 = 21,2914 %)"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "title": "Total Pct"
+      }
+     },
+     "title": "CostTotalMaxim",
+     "type": "object"
+    },
+    "Delegacio": {
+     "additionalProperties": false,
+     "properties": {
+      "organ_delegat": {
+       "enum": [
+        "alcaldia",
+        "ple",
+        "junta_govern"
+       ],
+       "title": "Organ Delegat",
+       "type": "string"
+      },
+      "condicio": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "title": "Condicio"
+      },
+      "data_acord_ple": {
+       "anyOf": [
+        {
+         "format": "date",
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "title": "Data Acord Ple"
+      }
+     },
+     "required": [
+      "organ_delegat"
+     ],
+     "title": "Delegacio",
+     "type": "object"
+    },
+    "Formalitzacio": {
+     "additionalProperties": false,
+     "properties": {
+      "data": {
+       "anyOf": [
+        {
+         "format": "date",
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "title": "Data"
+      },
+      "entitat": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "title": "Entitat"
+      },
+      "tae_pct": {
+       "anyOf": [
+        {
+         "anyOf": [
+          {
+           "type": "number"
+          },
+          {
+           "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,5}|(?=[\\d.]{1,10}0*$)\\d{0,5}\\.\\d{0,4}0*$)",
+           "type": "string"
+          }
+         ],
+         "description": "Tant per cent (21.2914 = 21,2914 %)"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "title": "Tae Pct"
+      },
+      "venciment": {
+       "anyOf": [
+        {
+         "format": "date",
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "title": "Venciment"
+      }
+     },
+     "title": "Formalitzacio",
+     "type": "object"
+    },
+    "Oferta": {
+     "additionalProperties": false,
+     "properties": {
+      "entitat": {
+       "title": "Entitat",
+       "type": "string"
+      },
+      "data": {
+       "anyOf": [
+        {
+         "format": "date",
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "title": "Data"
+      },
+      "tipus_interes": {
+       "anyOf": [
+        {
+         "$ref": "#/$defs/TipusInteres"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null
+      },
+      "tae_pct": {
+       "anyOf": [
+        {
+         "anyOf": [
+          {
+           "type": "number"
+          },
+          {
+           "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,5}|(?=[\\d.]{1,10}0*$)\\d{0,5}\\.\\d{0,4}0*$)",
+           "type": "string"
+          }
+         ],
+         "description": "Tant per cent (21.2914 = 21,2914 %)"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "title": "Tae Pct"
+      },
+      "comissions": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "title": "Comissions"
+      }
+     },
+     "required": [
+      "entitat"
+     ],
+     "title": "Oferta",
+     "type": "object"
+    },
+    "Prudencia": {
+     "additionalProperties": false,
+     "properties": {
+      "resolucio": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "title": "Resolucio"
+      },
+      "elegible_fie": {
+       "anyOf": [
+        {
+         "type": "boolean"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "title": "Elegible Fie"
+      },
+      "cost_total_maxim": {
+       "anyOf": [
+        {
+         "$ref": "#/$defs/CostTotalMaxim"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null
+      },
+      "cost_total_maxim_si_regularitza": {
+       "anyOf": [
+        {
+         "$ref": "#/$defs/CostTotalMaxim"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null
+      }
+     },
+     "title": "Prudencia",
+     "type": "object"
+    },
+    "QuotaAmortitzacio": {
+     "additionalProperties": false,
+     "properties": {
+      "data": {
+       "format": "date",
+       "title": "Data",
+       "type": "string"
+      },
+      "capital": {
+       "anyOf": [
+        {
+         "type": "number"
+        },
+        {
+         "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,13}|(?=[\\d.]{1,16}0*$)\\d{0,13}\\.\\d{0,2}0*$)",
+         "type": "string"
+        }
+       ],
+       "description": "Import en euros, 2 decimals",
+       "title": "Capital"
+      },
+      "interessos": {
+       "anyOf": [
+        {
+         "type": "number"
+        },
+        {
+         "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,13}|(?=[\\d.]{1,16}0*$)\\d{0,13}\\.\\d{0,2}0*$)",
+         "type": "string"
+        }
+       ],
+       "description": "Import en euros, 2 decimals",
+       "title": "Interessos"
+      },
+      "capital_viu": {
+       "anyOf": [
+        {
+         "type": "number"
+        },
+        {
+         "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,13}|(?=[\\d.]{1,16}0*$)\\d{0,13}\\.\\d{0,2}0*$)",
+         "type": "string"
+        }
+       ],
+       "description": "Import en euros, 2 decimals",
+       "title": "Capital Viu"
+      }
+     },
+     "required": [
+      "data",
+      "capital",
+      "interessos",
+      "capital_viu"
+     ],
+     "title": "QuotaAmortitzacio",
+     "type": "object"
+    },
+    "TipusInteres": {
+     "additionalProperties": false,
+     "properties": {
+      "modalitat": {
+       "enum": [
+        "fix",
+        "variable"
+       ],
+       "title": "Modalitat",
+       "type": "string"
+      },
+      "index": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "description": "EURIBOR_12M, EURIBOR_6M…",
+       "title": "Index"
+      },
+      "diferencial_pct": {
+       "anyOf": [
+        {
+         "anyOf": [
+          {
+           "type": "number"
+          },
+          {
+           "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,5}|(?=[\\d.]{1,10}0*$)\\d{0,5}\\.\\d{0,4}0*$)",
+           "type": "string"
+          }
+         ],
+         "description": "Tant per cent (21.2914 = 21,2914 %)"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "title": "Diferencial Pct"
+      },
+      "tipus_fix_pct": {
+       "anyOf": [
+        {
+         "anyOf": [
+          {
+           "type": "number"
+          },
+          {
+           "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,5}|(?=[\\d.]{1,10}0*$)\\d{0,5}\\.\\d{0,4}0*$)",
+           "type": "string"
+          }
+         ],
+         "description": "Tant per cent (21.2914 = 21,2914 %)"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "title": "Tipus Fix Pct"
+      }
+     },
+     "required": [
+      "modalitat"
+     ],
+     "title": "TipusInteres",
+     "type": "object"
+    }
+   },
+   "additionalProperties": false,
+   "properties": {
+    "font_ref": {
+     "anyOf": [
+      {
+       "type": "string"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "description": "Fitxer + full + cel·la, o document + annex/pàgina",
+     "title": "Font Ref"
+    },
+    "calculats": {
+     "description": "Noms dels camps calculats (no llegits d'una font)",
+     "items": {
+      "type": "string"
+     },
+     "title": "Calculats",
+     "type": "array"
+    },
+    "classe": {
+     "enum": [
+      "tresoreria",
+      "llarg_termini"
+     ],
+     "title": "Classe",
+     "type": "string"
+    },
+    "import": {
+     "anyOf": [
+      {
+       "type": "number"
+      },
+      {
+       "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,13}|(?=[\\d.]{1,16}0*$)\\d{0,13}\\.\\d{0,2}0*$)",
+       "type": "string"
+      }
+     ],
+     "description": "Import en euros, 2 decimals",
+     "title": "Import"
+    },
+    "termini_mesos": {
+     "maximum": 480,
+     "minimum": 1,
+     "title": "Termini Mesos",
+     "type": "integer"
+    },
+    "tipus_interes": {
+     "anyOf": [
+      {
+       "$ref": "#/$defs/TipusInteres"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null
+    },
+    "amortitzacio": {
+     "anyOf": [
+      {
+       "type": "string"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Amortitzacio"
+    },
+    "liquidacio_interessos": {
+     "anyOf": [
+      {
+       "type": "string"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Liquidacio Interessos"
+    },
+    "base_ratio": {
+     "anyOf": [
+      {
+       "$ref": "#/$defs/BaseRatio"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null
+    },
+    "ratio_pct": {
+     "anyOf": [
+      {
+       "anyOf": [
+        {
+         "type": "number"
+        },
+        {
+         "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,5}|(?=[\\d.]{1,10}0*$)\\d{0,5}\\.\\d{0,4}0*$)",
+         "type": "string"
+        }
+       ],
+       "description": "Tant per cent (21.2914 = 21,2914 %)"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Ratio Pct"
+    },
+    "llindar_competencia_pct": {
+     "anyOf": [
+      {
+       "anyOf": [
+        {
+         "type": "number"
+        },
+        {
+         "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,5}|(?=[\\d.]{1,10}0*$)\\d{0,5}\\.\\d{0,4}0*$)",
+         "type": "string"
+        }
+       ],
+       "description": "Tant per cent (21.2914 = 21,2914 %)"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Llindar Competencia Pct"
+    },
+    "competencia": {
+     "anyOf": [
+      {
+       "enum": [
+        "alcaldia",
+        "ple",
+        "junta_govern"
+       ],
+       "type": "string"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Competencia"
+    },
+    "fonament_competencia": {
+     "anyOf": [
+      {
+       "type": "string"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Fonament Competencia"
+    },
+    "limit_art51_pct": {
+     "anyOf": [
+      {
+       "anyOf": [
+        {
+         "type": "number"
+        },
+        {
+         "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,5}|(?=[\\d.]{1,10}0*$)\\d{0,5}\\.\\d{0,4}0*$)",
+         "type": "string"
+        }
+       ],
+       "description": "Tant per cent (21.2914 = 21,2914 %)"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Limit Art51 Pct"
+    },
+    "prudencia": {
+     "anyOf": [
+      {
+       "$ref": "#/$defs/Prudencia"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null
+    },
+    "delegacio": {
+     "anyOf": [
+      {
+       "$ref": "#/$defs/Delegacio"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null
+    },
+    "ofertes": {
+     "items": {
+      "$ref": "#/$defs/Oferta"
+     },
+     "title": "Ofertes",
+     "type": "array"
+    },
+    "formalitzacio": {
+     "$ref": "#/$defs/Formalitzacio"
+    },
+    "quadre_amortitzacio": {
+     "items": {
+      "$ref": "#/$defs/QuotaAmortitzacio"
+     },
+     "title": "Quadre Amortitzacio",
+     "type": "array"
+    },
+    "comunicacions": {
+     "items": {
+      "$ref": "#/$defs/Comunicacio"
+     },
+     "title": "Comunicacions",
+     "type": "array"
+    }
+   },
+   "required": [
+    "classe",
+    "import",
+    "termini_mesos"
+   ],
+   "title": "DadesOperacioCredit",
+   "type": "object"
+  },
+  "pef": {
+   "$defs": {
+    "AnyTrajectoria": {
+     "additionalProperties": false,
+     "properties": {
+      "exercici": {
+       "title": "Exercici",
+       "type": "integer"
+      },
+      "capacitat_financament": {
+       "anyOf": [
+        {
+         "anyOf": [
+          {
+           "type": "number"
+          },
+          {
+           "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,13}|(?=[\\d.]{1,16}0*$)\\d{0,13}\\.\\d{0,2}0*$)",
+           "type": "string"
+          }
+         ],
+         "description": "Import en euros, 2 decimals"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "title": "Capacitat Financament"
+      },
+      "despesa_computable": {
+       "anyOf": [
+        {
+         "anyOf": [
+          {
+           "type": "number"
+          },
+          {
+           "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,13}|(?=[\\d.]{1,16}0*$)\\d{0,13}\\.\\d{0,2}0*$)",
+           "type": "string"
+          }
+         ],
+         "description": "Import en euros, 2 decimals"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "title": "Despesa Computable"
+      },
+      "limit": {
+       "anyOf": [
+        {
+         "anyOf": [
+          {
+           "type": "number"
+          },
+          {
+           "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,13}|(?=[\\d.]{1,16}0*$)\\d{0,13}\\.\\d{0,2}0*$)",
+           "type": "string"
+          }
+         ],
+         "description": "Import en euros, 2 decimals"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "title": "Limit"
+      },
+      "marge": {
+       "anyOf": [
+        {
+         "anyOf": [
+          {
+           "type": "number"
+          },
+          {
+           "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,13}|(?=[\\d.]{1,16}0*$)\\d{0,13}\\.\\d{0,2}0*$)",
+           "type": "string"
+          }
+         ],
+         "description": "Import en euros, 2 decimals"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "title": "Marge"
+      },
+      "deute_viu_pct": {
+       "anyOf": [
+        {
+         "anyOf": [
+          {
+           "type": "number"
+          },
+          {
+           "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,5}|(?=[\\d.]{1,10}0*$)\\d{0,5}\\.\\d{0,4}0*$)",
+           "type": "string"
+          }
+         ],
+         "description": "Tant per cent (21.2914 = 21,2914 %)"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "title": "Deute Viu Pct"
+      },
+      "es_projeccio": {
+       "default": true,
+       "title": "Es Projeccio",
+       "type": "boolean"
+      }
+     },
+     "required": [
+      "exercici"
+     ],
+     "title": "AnyTrajectoria",
+     "type": "object"
+    },
+    "Constatacio": {
+     "additionalProperties": false,
+     "properties": {
+      "exercici_incompliment": {
+       "title": "Exercici Incompliment",
+       "type": "integer"
+      },
+      "regles_incomplertes": {
+       "items": {
+        "enum": [
+         "estabilitat",
+         "regla_despesa",
+         "deute"
+        ],
+        "type": "string"
+       },
+       "title": "Regles Incomplertes",
+       "type": "array"
+      },
+      "data_constatacio": {
+       "anyOf": [
+        {
+         "format": "date",
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "description": "Data d'aprovació de la liquidació que constata l'incompliment",
+       "title": "Data Constatacio"
+      }
+     },
+     "required": [
+      "exercici_incompliment",
+      "regles_incomplertes"
+     ],
+     "title": "Constatacio",
+     "type": "object"
+    },
+    "Mesura": {
+     "additionalProperties": false,
+     "properties": {
+      "codi": {
+       "title": "Codi",
+       "type": "string"
+      },
+      "descripcio": {
+       "title": "Descripcio",
+       "type": "string"
+      },
+      "tipus": {
+       "enum": [
+        "ingressos",
+        "despeses",
+        "no_quantificada"
+       ],
+       "title": "Tipus",
+       "type": "string"
+      },
+      "import_anual": {
+       "anyOf": [
+        {
+         "anyOf": [
+          {
+           "type": "number"
+          },
+          {
+           "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,13}|(?=[\\d.]{1,16}0*$)\\d{0,13}\\.\\d{0,2}0*$)",
+           "type": "string"
+          }
+         ],
+         "description": "Import en euros, 2 decimals"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "title": "Import Anual"
+      },
+      "exercici": {
+       "anyOf": [
+        {
+         "type": "integer"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "title": "Exercici"
+      },
+      "indicador_seguiment": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "title": "Indicador Seguiment"
+      }
+     },
+     "required": [
+      "codi",
+      "descripcio",
+      "tipus"
+     ],
+     "title": "Mesura",
+     "type": "object"
+    },
+    "Quantificacio": {
+     "additionalProperties": false,
+     "properties": {
+      "exces": {
+       "anyOf": [
+        {
+         "anyOf": [
+          {
+           "type": "number"
+          },
+          {
+           "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,13}|(?=[\\d.]{1,16}0*$)\\d{0,13}\\.\\d{0,2}0*$)",
+           "type": "string"
+          }
+         ],
+         "description": "Import en euros, 2 decimals"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "title": "Exces"
+      },
+      "deduccio_rtdg": {
+       "anyOf": [
+        {
+         "anyOf": [
+          {
+           "type": "number"
+          },
+          {
+           "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,13}|(?=[\\d.]{1,16}0*$)\\d{0,13}\\.\\d{0,2}0*$)",
+           "type": "string"
+          }
+         ],
+         "description": "Import en euros, 2 decimals"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "title": "Deduccio Rtdg"
+      },
+      "deduccio_exces_afectat": {
+       "anyOf": [
+        {
+         "anyOf": [
+          {
+           "type": "number"
+          },
+          {
+           "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,13}|(?=[\\d.]{1,16}0*$)\\d{0,13}\\.\\d{0,2}0*$)",
+           "type": "string"
+          }
+         ],
+         "description": "Import en euros, 2 decimals"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "title": "Deduccio Exces Afectat"
+      },
+      "import_a_corregir": {
+       "anyOf": [
+        {
+         "anyOf": [
+          {
+           "type": "number"
+          },
+          {
+           "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,13}|(?=[\\d.]{1,16}0*$)\\d{0,13}\\.\\d{0,2}0*$)",
+           "type": "string"
+          }
+         ],
+         "description": "Import en euros, 2 decimals"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "title": "Import A Corregir"
+      },
+      "fonament_deduccio": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "title": "Fonament Deduccio"
+      },
+      "criteri_confirmat_tutela": {
+       "anyOf": [
+        {
+         "type": "boolean"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "title": "Criteri Confirmat Tutela"
+      }
+     },
+     "title": "Quantificacio",
+     "type": "object"
+    },
+    "TramitPef": {
+     "additionalProperties": false,
+     "properties": {
+      "data_elaboracio": {
+       "anyOf": [
+        {
+         "format": "date",
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "title": "Data Elaboracio"
+      },
+      "data_ple": {
+       "anyOf": [
+        {
+         "format": "date",
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "title": "Data Ple"
+      },
+      "data_comunicacio_ministeri": {
+       "anyOf": [
+        {
+         "format": "date",
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "title": "Data Comunicacio Ministeri"
+      },
+      "data_comunicacio_generalitat": {
+       "anyOf": [
+        {
+         "format": "date",
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "title": "Data Comunicacio Generalitat"
+      },
+      "data_publicacio": {
+       "anyOf": [
+        {
+         "format": "date",
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "title": "Data Publicacio"
+      }
+     },
+     "title": "TramitPef",
+     "type": "object"
+    }
+   },
+   "additionalProperties": false,
+   "properties": {
+    "font_ref": {
+     "anyOf": [
+      {
+       "type": "string"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "description": "Fitxer + full + cel·la, o document + annex/pàgina",
+     "title": "Font Ref"
+    },
+    "calculats": {
+     "description": "Noms dels camps calculats (no llegits d'una font)",
+     "items": {
+      "type": "string"
+     },
+     "title": "Calculats",
+     "type": "array"
+    },
+    "exercicis": {
+     "description": "Exercicis de vigència: l'any en curs i el següent (art. 21 LOEPSF)",
+     "items": {
+      "type": "integer"
+     },
+     "title": "Exercicis",
+     "type": "array"
+    },
+    "causa": {
+     "anyOf": [
+      {
+       "type": "string"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Causa"
+    },
+    "constatacio": {
+     "$ref": "#/$defs/Constatacio"
+    },
+    "quantificacio": {
+     "anyOf": [
+      {
+       "$ref": "#/$defs/Quantificacio"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null
+    },
+    "trajectoria": {
+     "items": {
+      "$ref": "#/$defs/AnyTrajectoria"
+     },
+     "title": "Trajectoria",
+     "type": "array"
+    },
+    "mesures": {
+     "items": {
+      "$ref": "#/$defs/Mesura"
+     },
+     "title": "Mesures",
+     "type": "array"
+    },
+    "tramit": {
+     "$ref": "#/$defs/TramitPef"
+    }
+   },
+   "required": [
+    "exercicis",
+    "constatacio"
+   ],
+   "title": "DadesPef",
+   "type": "object"
+  },
+  "modificacio_credit": {
+   "$defs": {
+    "ImpacteMc": {
+     "additionalProperties": false,
+     "properties": {
+      "afecta_estabilitat": {
+       "anyOf": [
+        {
+         "type": "boolean"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "title": "Afecta Estabilitat"
+      },
+      "afecta_regla_despesa": {
+       "anyOf": [
+        {
+         "type": "boolean"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "title": "Afecta Regla Despesa"
+      },
+      "informe_estabilitat": {
+       "anyOf": [
+        {
+         "enum": [
+          "compleix",
+          "incompliment_previst",
+          "no_escau"
+         ],
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "title": "Informe Estabilitat"
+      }
+     },
+     "title": "ImpacteMc",
+     "type": "object"
+    },
+    "LiniaMc": {
+     "additionalProperties": false,
+     "properties": {
+      "sentit": {
+       "enum": [
+        "alta",
+        "baixa"
+       ],
+       "title": "Sentit",
+       "type": "string"
+      },
+      "organica": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "title": "Organica"
+      },
+      "programa": {
+       "pattern": "^\\d{3,5}$",
+       "title": "Programa",
+       "type": "string"
+      },
+      "economica": {
+       "pattern": "^\\d{3,7}$",
+       "title": "Economica",
+       "type": "string"
+      },
+      "descripcio": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "title": "Descripcio"
+      },
+      "import": {
+       "anyOf": [
+        {
+         "exclusiveMinimum": 0.0,
+         "type": "number"
+        },
+        {
+         "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,13}|(?=[\\d.]{1,16}0*$)\\d{0,13}\\.\\d{0,2}0*$)",
+         "type": "string"
+        }
+       ],
+       "description": "Import en euros, 2 decimals",
+       "title": "Import"
+      }
+     },
+     "required": [
+      "sentit",
+      "programa",
+      "economica",
+      "import"
+     ],
+     "title": "LiniaMc",
+     "type": "object"
+    },
+    "RecursMc": {
+     "additionalProperties": false,
+     "properties": {
+      "tipus": {
+       "enum": [
+        "rtdg",
+        "rt_afectat",
+        "nous_majors_ingressos",
+        "baixes_anullacio",
+        "operacio_credit",
+        "aportacio_compromis_ferm",
+        "exces_financament_afectat"
+       ],
+       "title": "Tipus",
+       "type": "string"
+      },
+      "concepte_ingressos": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "title": "Concepte Ingressos"
+      },
+      "import": {
+       "anyOf": [
+        {
+         "exclusiveMinimum": 0.0,
+         "type": "number"
+        },
+        {
+         "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,13}|(?=[\\d.]{1,16}0*$)\\d{0,13}\\.\\d{0,2}0*$)",
+         "type": "string"
+        }
+       ],
+       "description": "Import en euros, 2 decimals",
+       "title": "Import"
+      }
+     },
+     "required": [
+      "tipus",
+      "import"
+     ],
+     "title": "RecursMc",
+     "type": "object"
+    }
+   },
+   "additionalProperties": false,
+   "properties": {
+    "font_ref": {
+     "anyOf": [
+      {
+       "type": "string"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "description": "Fitxer + full + cel·la, o document + annex/pàgina",
+     "title": "Font Ref"
+    },
+    "calculats": {
+     "description": "Noms dels camps calculats (no llegits d'una font)",
+     "items": {
+      "type": "string"
+     },
+     "title": "Calculats",
+     "type": "array"
+    },
+    "modalitat": {
+     "enum": [
+      "credit_extraordinari",
+      "suplement",
+      "ampliacio",
+      "transferencia",
+      "generacio",
+      "incorporacio",
+      "baixa_anullacio"
+     ],
+     "title": "Modalitat",
+     "type": "string"
+    },
+    "num_modificacio": {
+     "anyOf": [
+      {
+       "type": "string"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Num Modificacio"
+    },
+    "linies": {
+     "items": {
+      "$ref": "#/$defs/LiniaMc"
+     },
+     "title": "Linies",
+     "type": "array"
+    },
+    "recursos": {
+     "items": {
+      "$ref": "#/$defs/RecursMc"
+     },
+     "title": "Recursos",
+     "type": "array"
+    },
+    "impacte": {
+     "anyOf": [
+      {
+       "$ref": "#/$defs/ImpacteMc"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null
+    }
+   },
+   "required": [
+    "modalitat",
+    "linies"
+   ],
+   "title": "DadesModificacioCredit",
+   "type": "object"
+  },
+  "tresoreria": {
+   "$defs": {
+    "SaldoCompte": {
+     "additionalProperties": false,
+     "properties": {
+      "compte": {
+       "title": "Compte",
+       "type": "string"
+      },
+      "entitat_financera": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "title": "Entitat Financera"
+      },
+      "import": {
+       "anyOf": [
+        {
+         "type": "number"
+        },
+        {
+         "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,13}|(?=[\\d.]{1,16}0*$)\\d{0,13}\\.\\d{0,2}0*$)",
+         "type": "string"
+        }
+       ],
+       "description": "Import en euros, 2 decimals",
+       "title": "Import"
+      }
+     },
+     "required": [
+      "compte",
+      "import"
+     ],
+     "title": "SaldoCompte",
+     "type": "object"
+    }
+   },
+   "additionalProperties": false,
+   "properties": {
+    "font_ref": {
+     "anyOf": [
+      {
+       "type": "string"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "description": "Fitxer + full + cel·la, o document + annex/pàgina",
+     "title": "Font Ref"
+    },
+    "calculats": {
+     "description": "Noms dels camps calculats (no llegits d'una font)",
+     "items": {
+      "type": "string"
+     },
+     "title": "Calculats",
+     "type": "array"
+    },
+    "data_tall": {
+     "format": "date",
+     "title": "Data Tall",
+     "type": "string"
+    },
+    "saldos": {
+     "items": {
+      "$ref": "#/$defs/SaldoCompte"
+     },
+     "title": "Saldos",
+     "type": "array"
+    },
+    "fons_liquids": {
+     "anyOf": [
+      {
+       "anyOf": [
+        {
+         "type": "number"
+        },
+        {
+         "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,13}|(?=[\\d.]{1,16}0*$)\\d{0,13}\\.\\d{0,2}0*$)",
+         "type": "string"
+        }
+       ],
+       "description": "Import en euros, 2 decimals"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Fons Liquids"
+    }
+   },
+   "required": [
+    "data_tall"
+   ],
+   "title": "DadesTresoreria",
+   "type": "object"
+  },
+  "pmp": {
+   "additionalProperties": false,
+   "properties": {
+    "font_ref": {
+     "anyOf": [
+      {
+       "type": "string"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "description": "Fitxer + full + cel·la, o document + annex/pàgina",
+     "title": "Font Ref"
+    },
+    "calculats": {
+     "description": "Noms dels camps calculats (no llegits d'una font)",
+     "items": {
+      "type": "string"
+     },
+     "title": "Calculats",
+     "type": "array"
+    },
+    "periode": {
+     "description": "2026-T2 (trimestral) o 2026-05 (mensual)",
+     "pattern": "^\\d{4}-(T[1-4]|\\d{2})$",
+     "title": "Periode",
+     "type": "string"
+    },
+    "ratio_operacions_pagades": {
+     "anyOf": [
+      {
+       "type": "number"
+      },
+      {
+       "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,5}|(?=[\\d.]{1,8}0*$)\\d{0,5}\\.\\d{0,2}0*$)",
+       "type": "string"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Ratio Operacions Pagades"
+    },
+    "import_pagat": {
+     "anyOf": [
+      {
+       "anyOf": [
+        {
+         "type": "number"
+        },
+        {
+         "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,13}|(?=[\\d.]{1,16}0*$)\\d{0,13}\\.\\d{0,2}0*$)",
+         "type": "string"
+        }
+       ],
+       "description": "Import en euros, 2 decimals"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Import Pagat"
+    },
+    "ratio_operacions_pendents": {
+     "anyOf": [
+      {
+       "type": "number"
+      },
+      {
+       "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,5}|(?=[\\d.]{1,8}0*$)\\d{0,5}\\.\\d{0,2}0*$)",
+       "type": "string"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Ratio Operacions Pendents"
+    },
+    "import_pendent": {
+     "anyOf": [
+      {
+       "anyOf": [
+        {
+         "type": "number"
+        },
+        {
+         "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,13}|(?=[\\d.]{1,16}0*$)\\d{0,13}\\.\\d{0,2}0*$)",
+         "type": "string"
+        }
+       ],
+       "description": "Import en euros, 2 decimals"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Import Pendent"
+    },
+    "pmp_dies": {
+     "anyOf": [
+      {
+       "type": "number"
+      },
+      {
+       "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,5}|(?=[\\d.]{1,8}0*$)\\d{0,5}\\.\\d{0,2}0*$)",
+       "type": "string"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Pmp Dies"
+    }
+   },
+   "required": [
+    "periode"
+   ],
+   "title": "DadesPmp",
+   "type": "object"
+  },
+  "pressupost": {
+   "additionalProperties": false,
+   "properties": {
+    "font_ref": {
+     "anyOf": [
+      {
+       "type": "string"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "description": "Fitxer + full + cel·la, o document + annex/pàgina",
+     "title": "Font Ref"
+    },
+    "calculats": {
+     "description": "Noms dels camps calculats (no llegits d'una font)",
+     "items": {
+      "type": "string"
+     },
+     "title": "Calculats",
+     "type": "array"
+    },
+    "situacio": {
+     "enum": [
+      "aprovat",
+      "prorrogat",
+      "en_elaboracio"
+     ],
+     "title": "Situacio",
+     "type": "string"
+    },
+    "total_ingressos": {
+     "anyOf": [
+      {
+       "anyOf": [
+        {
+         "type": "number"
+        },
+        {
+         "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,13}|(?=[\\d.]{1,16}0*$)\\d{0,13}\\.\\d{0,2}0*$)",
+         "type": "string"
+        }
+       ],
+       "description": "Import en euros, 2 decimals"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Total Ingressos"
+    },
+    "total_despeses": {
+     "anyOf": [
+      {
+       "anyOf": [
+        {
+         "type": "number"
+        },
+        {
+         "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,13}|(?=[\\d.]{1,16}0*$)\\d{0,13}\\.\\d{0,2}0*$)",
+         "type": "string"
+        }
+       ],
+       "description": "Import en euros, 2 decimals"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Total Despeses"
+    },
+    "data_aprovacio_inicial": {
+     "anyOf": [
+      {
+       "format": "date",
+       "type": "string"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Data Aprovacio Inicial"
+    },
+    "data_aprovacio_definitiva": {
+     "anyOf": [
+      {
+       "format": "date",
+       "type": "string"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Data Aprovacio Definitiva"
+    },
+    "data_publicacio_bop": {
+     "anyOf": [
+      {
+       "format": "date",
+       "type": "string"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Data Publicacio Bop"
+    }
+   },
+   "required": [
+    "situacio"
+   ],
+   "title": "DadesPressupost",
+   "type": "object"
+  },
+  "control_intern": {
+   "$defs": {
+    "InformeControl": {
+     "additionalProperties": false,
+     "properties": {
+      "tipus": {
+       "enum": [
+        "fiscalitzacio_previa",
+        "control_financer",
+        "informe_resum",
+        "omissio",
+        "objeccio"
+       ],
+       "title": "Tipus",
+       "type": "string"
+      },
+      "num": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "title": "Num"
+      },
+      "data": {
+       "anyOf": [
+        {
+         "format": "date",
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "title": "Data"
+      },
+      "resultat": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "title": "Resultat"
+      },
+      "efecte_suspensiu": {
+       "anyOf": [
+        {
+         "type": "boolean"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "title": "Efecte Suspensiu"
+      },
+      "resolucio_discrepancia": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "default": null,
+       "title": "Resolucio Discrepancia"
+      }
+     },
+     "required": [
+      "tipus"
+     ],
+     "title": "InformeControl",
+     "type": "object"
+    }
+   },
+   "additionalProperties": false,
+   "properties": {
+    "font_ref": {
+     "anyOf": [
+      {
+       "type": "string"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "description": "Fitxer + full + cel·la, o document + annex/pàgina",
+     "title": "Font Ref"
+    },
+    "calculats": {
+     "description": "Noms dels camps calculats (no llegits d'una font)",
+     "items": {
+      "type": "string"
+     },
+     "title": "Calculats",
+     "type": "array"
+    },
+    "informes": {
+     "items": {
+      "$ref": "#/$defs/InformeControl"
+     },
+     "title": "Informes",
+     "type": "array"
+    }
+   },
+   "title": "DadesControlIntern",
+   "type": "object"
+  },
+  "compte_general": {
+   "additionalProperties": false,
+   "properties": {
+    "font_ref": {
+     "anyOf": [
+      {
+       "type": "string"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "description": "Fitxer + full + cel·la, o document + annex/pàgina",
+     "title": "Font Ref"
+    },
+    "calculats": {
+     "description": "Noms dels camps calculats (no llegits d'una font)",
+     "items": {
+      "type": "string"
+     },
+     "title": "Calculats",
+     "type": "array"
+    },
+    "data_formacio": {
+     "anyOf": [
+      {
+       "format": "date",
+       "type": "string"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Data Formacio"
+    },
+    "data_comissio_especial": {
+     "anyOf": [
+      {
+       "format": "date",
+       "type": "string"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Data Comissio Especial"
+    },
+    "data_exposicio_publica": {
+     "anyOf": [
+      {
+       "format": "date",
+       "type": "string"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Data Exposicio Publica"
+    },
+    "data_ple": {
+     "anyOf": [
+      {
+       "format": "date",
+       "type": "string"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Data Ple"
+    },
+    "data_rendicio_sindicatura": {
+     "anyOf": [
+      {
+       "format": "date",
+       "type": "string"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Data Rendicio Sindicatura"
+    }
+   },
+   "title": "DadesCompteGeneral",
+   "type": "object"
+  },
+  "tramesa": {
+   "additionalProperties": false,
+   "properties": {
+    "obligacio": {
+     "description": "Codi del catàleg cataleg/obligacions.yaml (p. ex. MIN_LIQUIDACIO)",
+     "title": "Obligacio",
+     "type": "string"
+    },
+    "periode": {
+     "description": "Període al qual es refereix: '2025', '2026-T3', o la clau de l'esdeveniment",
+     "title": "Periode",
+     "type": "string"
+    },
+    "estat": {
+     "default": "tramesa",
+     "enum": [
+      "tramesa",
+      "no_escau"
+     ],
+     "title": "Estat",
+     "type": "string"
+    },
+    "data_tramesa": {
+     "anyOf": [
+      {
+       "format": "date",
+       "type": "string"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Data Tramesa"
+    },
+    "justificant": {
+     "anyOf": [
+      {
+       "type": "string"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Justificant"
+    },
+    "observacions": {
+     "anyOf": [
+      {
+       "type": "string"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Observacions"
+    }
+   },
+   "required": [
+    "obligacio",
+    "periode"
+   ],
+   "title": "DadesTramesa",
+   "type": "object"
+  }
+ }
+}

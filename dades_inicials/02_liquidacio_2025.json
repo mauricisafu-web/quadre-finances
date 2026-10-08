@@ -1,0 +1,91 @@
+{
+  "$fitxa": "torre-finances/expedient@1",
+  "entitat": { "nif": "P4315400D" },
+  "tipus": "liquidacio",
+  "expedient": {
+    "num": "4315200000-2026-0000642",
+    "exercici": 2025,
+    "titol": "Liquidació del pressupost 2025",
+    "estat_tramit": "en_tramit",
+    "organ": "alcaldia",
+    "resolucio": { "num": null, "data": null },
+    "fites": [
+      { "fita": "informes_control_intern_4_5", "estat": "fet", "document": "02. Informes control intern 4 i 5 - Liquidacio 2025.docx" },
+      { "fita": "decret_liquidacio", "estat": "pendent" },
+      { "fita": "tramesa_ministeri", "estat": "pendent" }
+    ]
+  },
+  "font": {
+    "origen": "claude_code",
+    "generat_el": "2026-09-24T17:00:00+02:00",
+    "fitxers": [ { "ruta": "liquidació/Còpia_comprovacions tancament v14 ABSIS_2025_La Torre (1).xlsx" } ]
+  },
+  "dades": {
+    "execucio_ingressos": { "drn": 3279611.57, "recaptacio_neta": 3091997.30, "font_ref": "comprovacions v14!LIQ_ANNEXOS I (annex 2)" },
+    "execucio_despeses": {
+      "credits_inicials": 3400474.50, "modificacions": 296583.25, "credits_definitius": 3697057.75,
+      "autoritzat": 3547100.67, "compromes": 3547100.67, "orn": 2337461.47,
+      "ordenat": 2234066.47, "pagaments": 2234066.47, "pendent_pagament": 103395.00,
+      "font_ref": "comprovacions v14!LIQ_ANNEXOS I (annex 1)"
+    },
+    "resultat_pressupostari": {
+      "operacions_corrents": { "drn": 1291602.94, "orn": 1199958.30 },
+      "operacions_capital": { "drn": 1988008.63, "orn": 1137503.17 },
+      "rp": 942150.10,
+      "ajust_despeses_rtdg": 105422.08,
+      "ajust_desviacions_negatives": 35667.06,
+      "ajust_desviacions_positives": 1047593.90,
+      "rp_ajustat": 35645.34,
+      "font_ref": "comprovacions v14!LIQ_ANNEXOS I (annex 3)"
+    },
+    "romanent_tresoreria": {
+      "fons_liquids": 1180327.58,
+      "drets_pendents_total": 477830.95,
+      "obligacions_pendents_total": 162153.11,
+      "partides_pendents_aplicacio": 0.00,
+      "rt_total": 1496005.42,
+      "saldos_dubtos_cobrament": 188636.69,
+      "exces_financament_afectat": 1008818.81,
+      "rtdg": 298549.92,
+      "saldo_413": 4440.58,
+      "saldo_418": null,
+      "rtdg_ajustat": 294109.34,
+      "font_ref": "comprovacions v14!LIQ_ANNEXOS I (annexos 4 i 5)"
+    },
+    "romanents_credit": { "total": 1359596.28, "incorporacio_obligatoria": 1198210.23, "incorporacio_voluntaria": 2408.35 },
+    "estabilitat": { "capacitat_financament": 930562.64, "font_ref": "comprovacions v14!BCF" },
+    "regla_despesa": {
+      "taxa_referencia": 3.2, "limit_n": 1003313.10, "despesa_computable_n": 1179558.48,
+      "marge": -176245.38, "exces_sobre_limit_pct": 17.57, "variacio_interanual_pct": null, "compleix": false,
+      "font_ref": "comprovacions v14!LIQ_Regla de la despesa N"
+    },
+    "estalvi_net": {
+      "ingressos_corrents": 1291602.94, "ingressos_corrents_ajustats": 1291602.94,
+      "estalvi_net": 146276.72, "estalvi_net_ajustat": 148624.59,
+      "font_ref": "comprovacions v14!LIQ_Estalvi net N"
+    },
+    "endeutament": { "deute_viu_total": 0.00, "ratio_deute_viu_pct": 0 },
+    "pmp": { "pmp_dies": 10.14 },
+    "control_intern": {
+      "objeccions": 0, "omissions_fiscalitzacio": 0, "anomalies_ingressos": 0, "pagaments_justificar_pendents": 0,
+      "bestretes": [ { "codi": "2019000002", "import": 200.00, "estat": "pendent_justificar" } ],
+      "saldos_a_depurar": [
+        { "compte": "5741", "import": 800.00, "nota": "600 € corresponen a una bestreta de 2016 que no surt al llistat" },
+        { "compte": "5751", "import": 145.02, "nota": "Llum de 2016" }
+      ]
+    }
+  },
+  "pendents": [
+    { "camp": "romanent_tresoreria.saldo_418", "motiu": "Annex 5 = 0,00; l'estalvi net i la distribució del superàvit fan servir 215,82. Pendent de confirmar" },
+    { "camp": "expedient.resolucio", "motiu": "Falta el número i la data del decret de liquidació" },
+    { "camp": "regla_despesa.variacio_interanual_pct", "motiu": "Llegir-la del full LIQ_Regla de la despesa N (el 17,57 % és l'excés sobre el límit)" },
+    { "camp": "annex2.devolucio_ingressos", "motiu": "La cel·la de devolució d'ingressos de l'annex 2 dona #N/A" }
+  ],
+  "incoherencies": [
+    {
+      "descripcio": "El saldo del compte 418 difereix entre annexos i canvia el RTDG ajustat",
+      "camp": "romanent_tresoreria.saldo_418",
+      "valors": { "annex_5": 0.00, "estalvi_net_i_superavit": 215.82, "rtdg_ajustat_si_0": 294109.34, "rtdg_ajustat_si_215_82": 293893.52 }
+    }
+  ]
+}

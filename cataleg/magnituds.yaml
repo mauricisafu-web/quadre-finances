@@ -1,0 +1,58 @@
+# Catàleg de magnituds: què és cada xifra, d'on surt dins la fitxa i quin fonament té.
+# `cami` = ruta dins `dades` d'una fitxa de tipus `liquidacio`.
+# Afegir una magnitud nova NO requereix migrar la BD: només una entrada aquí.
+
+LIQ.PREV_DEF_ING:   {nom: Previsions definitives d'ingressos, unitat: eur, grup: execucio, cami: execucio_ingressos.previsions_definitives}
+LIQ.DRN:            {nom: Drets reconeguts nets, unitat: eur, grup: execucio, cami: execucio_ingressos.drn, fonament: "ICAL; art. 93 RD 500/1990"}
+LIQ.RECAPTACIO:     {nom: Recaptació neta (corrent), unitat: eur, grup: execucio, cami: execucio_ingressos.recaptacio_neta}
+LIQ.CRED_DEF:       {nom: Crèdits definitius, unitat: eur, grup: execucio, cami: execucio_despeses.credits_definitius}
+LIQ.ORN:            {nom: Obligacions reconegudes netes, unitat: eur, grup: execucio, cami: execucio_despeses.orn, fonament: "ICAL; art. 93 RD 500/1990"}
+LIQ.PAGAMENTS:      {nom: Pagaments realitzats (corrent), unitat: eur, grup: execucio, cami: execucio_despeses.pagaments}
+LIQ.DRN_CORRENTS:   {nom: DRN operacions corrents (cap. 1-5), unitat: eur, grup: execucio, cami: resultat_pressupostari.operacions_corrents.drn}
+LIQ.ORN_CORRENTS:   {nom: ORN operacions corrents (cap. 1-5), unitat: eur, grup: execucio, cami: resultat_pressupostari.operacions_corrents.orn}
+LIQ.DRN_CAPITAL:    {nom: DRN operacions de capital (cap. 6-7), unitat: eur, grup: execucio, cami: resultat_pressupostari.operacions_capital.drn}
+LIQ.ORN_CAPITAL:    {nom: ORN operacions de capital (cap. 6-7), unitat: eur, grup: execucio, cami: resultat_pressupostari.operacions_capital.orn}
+
+LIQ.RP:             {nom: Resultat pressupostari, unitat: eur, grup: resultat, cami: resultat_pressupostari.rp, fonament: "art. 96 RD 500/1990"}
+LIQ.AJ_RTDG:        {nom: Ajust per despeses finançades amb RTDG, unitat: eur, grup: resultat, cami: resultat_pressupostari.ajust_despeses_rtdg, fonament: "art. 97 RD 500/1990"}
+LIQ.AJ_DESV_NEG:    {nom: Desviacions de finançament negatives, unitat: eur, grup: resultat, cami: resultat_pressupostari.ajust_desviacions_negatives, fonament: "art. 97 RD 500/1990"}
+LIQ.AJ_DESV_POS:    {nom: Desviacions de finançament positives, unitat: eur, grup: resultat, cami: resultat_pressupostari.ajust_desviacions_positives, fonament: "art. 97 RD 500/1990"}
+LIQ.RPA:            {nom: Resultat pressupostari ajustat, unitat: eur, grup: resultat, cami: resultat_pressupostari.rp_ajustat, fonament: "arts. 96-97 RD 500/1990"}
+
+RT.FONS_LIQUIDS:    {nom: Fons líquids, unitat: eur, grup: romanent, cami: romanent_tresoreria.fons_liquids}
+RT.DRETS_PENDENTS:  {nom: Drets pendents de cobrament, unitat: eur, grup: romanent, cami: romanent_tresoreria.drets_pendents_total}
+RT.OBLIG_PENDENTS:  {nom: Obligacions pendents de pagament, unitat: eur, grup: romanent, cami: romanent_tresoreria.obligacions_pendents_total}
+RT.PARTIDES_PEND:   {nom: Partides pendents d'aplicació, unitat: eur, grup: romanent, cami: romanent_tresoreria.partides_pendents_aplicacio}
+RT.TOTAL:           {nom: Romanent de tresoreria total, unitat: eur, grup: romanent, cami: romanent_tresoreria.rt_total, fonament: "art. 191.2 TRLRHL; arts. 101-105 RD 500/1990"}
+RT.DUBTOS:          {nom: Saldos de dubtós cobrament, unitat: eur, grup: romanent, cami: romanent_tresoreria.saldos_dubtos_cobrament, fonament: "art. 193 bis TRLRHL"}
+RT.EXCES_AFECTAT:   {nom: Excés de finançament afectat, unitat: eur, grup: romanent, cami: romanent_tresoreria.exces_financament_afectat}
+RT.RTDG:            {nom: Romanent de tresoreria per a despeses generals, unitat: eur, grup: romanent, cami: romanent_tresoreria.rtdg, fonament: "art. 191.2 TRLRHL"}
+RT.SALDO_413:       {nom: Saldo del compte 413, unitat: eur, grup: romanent, cami: romanent_tresoreria.saldo_413}
+RT.SALDO_418:       {nom: Saldo del compte 418, unitat: eur, grup: romanent, cami: romanent_tresoreria.saldo_418}
+RT.RTDG_AJ:         {nom: RTDG ajustat, unitat: eur, grup: romanent, cami: romanent_tresoreria.rtdg_ajustat, fonament: "DA 6a LOEPSF"}
+
+ROM.TOTAL:          {nom: Romanents de crèdit, unitat: eur, grup: romanent, cami: romanents_credit.total}
+ROM.INC_OBLIG:      {nom: Romanents d'incorporació obligatòria, unitat: eur, grup: romanent, cami: romanents_credit.incorporacio_obligatoria, fonament: "art. 182 TRLRHL; art. 47 RD 500/1990"}
+
+EST.CF:             {nom: Capacitat (+) / necessitat (−) de finançament, unitat: eur, grup: estabilitat, cami: estabilitat.capacitat_financament, fonament: "arts. 3 i 11 LOEPSF"}
+
+RD.BASE:            {nom: Despesa computable n−1, unitat: eur, grup: regla_despesa, cami: regla_despesa.despesa_computable_n_1}
+RD.TAXA:            {nom: Taxa de referència, unitat: pct, grup: regla_despesa, cami: regla_despesa.taxa_referencia}
+RD.LIMIT:           {nom: Límit de la regla de despesa, unitat: eur, grup: regla_despesa, cami: regla_despesa.limit_n, fonament: "art. 12 LOEPSF"}
+RD.COMPUTABLE:      {nom: Despesa computable, unitat: eur, grup: regla_despesa, cami: regla_despesa.despesa_computable_n, fonament: "art. 12 LOEPSF"}
+RD.MARGE:           {nom: Marge de la regla de despesa, unitat: eur, grup: regla_despesa, cami: regla_despesa.marge, fonament: "art. 12 LOEPSF"}
+RD.VARIACIO:        {nom: Variació interanual de la despesa computable, unitat: pct, grup: regla_despesa, cami: regla_despesa.variacio_interanual_pct}
+RD.EXCES_PCT:       {nom: Excés sobre el límit, unitat: pct, grup: regla_despesa, cami: regla_despesa.exces_sobre_limit_pct}
+
+EN.ING_CORRENTS:    {nom: Ingressos corrents (cap. 1-5), unitat: eur, grup: estalvi_net, cami: estalvi_net.ingressos_corrents}
+EN.ING_EXTRA:       {nom: Ingressos extraordinaris, unitat: eur, grup: estalvi_net, cami: estalvi_net.ingressos_extraordinaris}
+EN.ING_CORR_AJ:     {nom: Ingressos corrents ajustats, unitat: eur, grup: estalvi_net, cami: estalvi_net.ingressos_corrents_ajustats, fonament: "art. 53 TRLRHL; DA 14a RDL 20/2011"}
+EN.ANUALITAT:       {nom: Anualitat teòrica d'amortització, unitat: eur, grup: estalvi_net, cami: estalvi_net.anualitat_teorica}
+EN.ESTALVI_NET:     {nom: Estalvi net, unitat: eur, grup: estalvi_net, cami: estalvi_net.estalvi_net, fonament: "art. 53.1 TRLRHL"}
+EN.ESTALVI_NET_AJ:  {nom: Estalvi net ajustat, unitat: eur, grup: estalvi_net, cami: estalvi_net.estalvi_net_ajustat, fonament: "art. 53.1 TRLRHL"}
+
+DEU.VIU:            {nom: Deute viu total, unitat: eur, grup: deute, cami: endeutament.deute_viu_total, fonament: "art. 53 TRLRHL"}
+DEU.RATIO:          {nom: Ràtio de deute viu, unitat: pct, grup: deute, cami: endeutament.ratio_deute_viu_pct, fonament: "art. 53 TRLRHL; DA 14a RDL 20/2011"}
+
+TES.PMP:            {nom: Període mitjà de pagament, unitat: dies, grup: tresoreria, cami: pmp.pmp_dies, fonament: "art. 13.6 LOEPSF; RD 635/2014"}
+TES.FONS_LIQUIDS:   {nom: Fons líquids a la data de tall, unitat: eur, grup: tresoreria, cami: null, origen: "fitxes de tipus tresoreria"}

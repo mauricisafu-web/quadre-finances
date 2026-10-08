@@ -1,0 +1,406 @@
+# Catàleg d'obligacions de remissió d'informació — Ajuntament de la Torre de l'Espanyol
+# (641 h · règim comú · NO model de cessió · tutela financera: Generalitat de Catalunya)
+#
+# Fonts verificades el 24/09/2026:
+#  - OM HAP/2105/2012, text consolidat BOE (darrera actualització 26/12/2025; inclou l'OM HAC/1518/2025,
+#    en vigor l'1/1/2026): arts. 4, 5, 6, 9, 15, 16, 17, 19.
+#  - Ordre ECF/138/2007 (text consolidat, Departament d'Economia): arts. 4, 5, 10, 11, 12, 13.
+#  - Nota informativa DGPFAT sobre el règim de tutela financera 2026 (28/01/2026).
+#  - Web «Hisendes locals» de la Generalitat (pressupost i liquidació a Presidència; estat del deute; Sindicatura).
+#  - TRLRHL arts. 169, 191, 193, 212 i 218; RD 424/2017 art. 37; LOEPSF arts. 23 i 27.
+#
+# CRITERI DE DATES: quan la norma diu «abans del dia X» (`abans_de: true`), la data límit que
+# calcula el sistema és el dia anterior a X (criteri conservador). Així una alerta mai arriba tard.
+#
+# Tipus de termini:
+#   anual:        {mes, dia, offset_any}  → venciment = (periode + offset_any)-mes-dia
+#   trimestral:   {trimestres: [..]}      → darrer dia del mes següent al final del trimestre
+#   esdeveniment: {event, dies | mesos | dia_mes_seguent} → a partir de la data d'un fet de l'expedient
+# `aplica`: condicions sobre l'entitat (poblacio_max, poblacio_min, model_cessio, tutela) o `condicional: true`
+# (només s'activa si hi ha l'esdeveniment o la ho marques).
+
+# ═════════════════════════════ ESTAT · Ministeri d'Hisenda ═════════════════════════════
+# Canal comú: Oficina Virtual de Coordinació Financera amb les Entitats Locals (autoritza la Intervenció,
+# art. 4.1.b OM), amb signatura electrònica (art. 5 OM).
+
+MIN_PLANS_MIG_TERMINI:
+  nom: Plans pressupostaris a mitjà termini (marcs pressupostaris)
+  titol_periode: "Plans {p1}-{p3}"
+  organisme: Ministeri d'Hisenda
+  ambit: estatal
+  canal: Oficina Virtual EELL (Ministeri d'Hisenda)
+  fonament: "art. 6 OM HAP/2105/2012; art. 29 LOEPSF"
+  text_termini: "Abans del 15 de març de cada any"
+  termini: {tipus: anual, mes: 3, dia: 15, offset_any: 0, abans_de: true}
+  contingut:
+    - Plans pressupostaris dels tres exercicis següents, amb els pasius contingents (redacció OM HAC/1518/2025)
+  consequencies: "art. 19 OM: requeriment (≤ 15 dies naturals) i, si no s'atén, publicitat i mesures automàtiques de l'art. 20 LOEPSF"
+  confianca: alta
+
+MIN_LINIES_FONAMENTALS:
+  nom: Línies fonamentals del pressupost
+  titol_periode: "Pressupost {p}"
+  organisme: Ministeri d'Hisenda
+  ambit: estatal
+  canal: Oficina Virtual EELL (Ministeri d'Hisenda)
+  fonament: "art. 15.1 OM HAP/2105/2012; art. 27.2 LOEPSF"
+  text_termini: "Abans del 15 de setembre de l'any anterior al del pressupost"
+  termini: {tipus: anual, mes: 9, dia: 15, offset_any: -1, abans_de: true}
+  contingut:
+    - Polítiques i mesures d'ingressos i despeses; saldos i relació amb la capacitat/necessitat de finançament (SEC)
+    - Previsió de moviment i situació del deute
+    - Informe de la Intervenció d'avaluació de l'objectiu d'estabilitat i del límit de deute
+  consequencies: "art. 19 OM"
+  confianca: alta
+
+MIN_PRESSUPOST:
+  nom: Pressupost aprovat (o prorrogat)
+  titol_periode: "Pressupost {p}"
+  organisme: Ministeri d'Hisenda
+  ambit: estatal
+  canal: Oficina Virtual EELL (Ministeri d'Hisenda)
+  fonament: "art. 15.3 OM HAP/2105/2012; art. 169.4 TRLRHL"
+  text_termini: "Abans del 31 de gener de l'exercici del pressupost (si no està aprovat, el prorrogat)"
+  termini: {tipus: anual, mes: 1, dia: 31, offset_any: 0, abans_de: true}
+  contingut:
+    - Pressupost aprovat i estats financers inicials; inversions de l'exercici i dels tres següents amb el finançament
+    - Relació amb la capacitat/necessitat de finançament (SEC) i informe d'Intervenció d'estabilitat i deute
+    - Informació de personal (art. 7 OM); pasius contingents i informació de catàstrofes (OM HAC/1518/2025)
+  consequencies: "art. 19 OM"
+  confianca: alta
+
+MIN_LIQUIDACIO:
+  nom: Liquidació del pressupost
+  titol_periode: "Liquidació {p}"
+  organisme: Ministeri d'Hisenda
+  ambit: estatal
+  canal: Oficina Virtual EELL (Ministeri d'Hisenda)
+  fonament: "art. 15.4 OM HAP/2105/2012; art. 193.5 TRLRHL"
+  text_termini: "Abans del 31 de març de l'exercici següent"
+  termini: {tipus: anual, mes: 3, dia: 31, offset_any: 1, abans_de: true}
+  contingut:
+    - Pressupost liquidat; obligacions vençudes no imputades (compte 413); deute viu a 31/12 amb quadres d'amortització
+    - Relació amb la capacitat/necessitat de finançament (SEC); pasius contingents; participacions en societats
+    - Informe d'Intervenció d'estabilitat, regla de despesa i límit de deute; inversions financerament sostenibles (DA 16a TRLRHL)
+  consequencies: "art. 19 OM; no estar al corrent impedeix l'accés als compartiments del FFEELL (art. 50 RDL 17/2014) i obliga al diferencial de prudència més alt; les LPGE poden preveure la retenció de la PIE"
+  confianca: alta
+
+MIN_COMPTE_GENERAL:
+  nom: Còpia del Compte General
+  titol_periode: "Compte General {p}"
+  organisme: Ministeri d'Hisenda
+  ambit: estatal
+  canal: Oficina Virtual EELL (Ministeri d'Hisenda)
+  fonament: "art. 15.5 OM HAP/2105/2012"
+  text_termini: "Amb anterioritat al 31 d'octubre de l'exercici següent"
+  termini: {tipus: anual, mes: 10, dia: 31, offset_any: 1, abans_de: true}
+  contingut:
+    - Còpia del Compte General; liquidació completa; operacions no pressupostàries; estat del deute i avals
+    - Informació de personal (art. 7 OM)
+  consequencies: "art. 19 OM"
+  confianca: alta
+
+MIN_COST_EFECTIU:
+  nom: Cost efectiu dels serveis
+  titol_periode: "Cost efectiu {p}"
+  organisme: Ministeri d'Hisenda
+  ambit: estatal
+  canal: Oficina Virtual EELL (Ministeri d'Hisenda)
+  fonament: "art. 15.2 OM HAP/2105/2012; art. 116 ter LBRL; OM HAP/2075/2014"
+  text_termini: "Abans de l'1 de novembre, amb dades de la liquidació de l'exercici anterior"
+  termini: {tipus: anual, mes: 11, dia: 1, offset_any: 1, abans_de: true}
+  contingut:
+    - Cost efectiu de cada servei a partir de la liquidació de l'exercici anterior
+  consequencies: "art. 19 OM"
+  confianca: alta
+
+MIN_TRIMESTRAL_4T:
+  nom: Informació trimestral completa (4t trimestre)
+  titol_periode: "{p}"
+  organisme: Ministeri d'Hisenda
+  ambit: estatal
+  canal: Oficina Virtual EELL (Ministeri d'Hisenda)
+  fonament: "art. 16 OM HAP/2105/2012 (art. 16.10: els municipis ≤ 5.000 h només estan exempts dels tres primers trimestres)"
+  text_termini: "Abans del darrer dia del mes següent al final del trimestre (gener)"
+  termini: {tipus: trimestral, trimestres: [4], abans_de: true}
+  aplica: {poblacio_max: 5000}
+  contingut:
+    - Actualització del pressupost i modificacions; obligacions no imputades; ajustos SEC
+    - Actualització de l'informe d'Intervenció (estabilitat i deute) i valoració de la regla de despesa al tancament
+    - Execució acumulada; informe de morositat (Llei 15/2010); pla de tresoreria i deute viu; PMP; personal
+  consequencies: "art. 19 OM"
+  confianca: alta
+
+MIN_TRIMESTRAL_PMP_TRESORERIA:
+  nom: PMP i pla de tresoreria (1r a 3r trimestre)
+  titol_periode: "{p}"
+  organisme: Ministeri d'Hisenda
+  ambit: estatal
+  canal: Oficina Virtual EELL (Ministeri d'Hisenda)
+  fonament: "art. 16.7, 16.8 i 16.10 OM HAP/2105/2012; RD 635/2014"
+  text_termini: "Abans del darrer dia del mes següent al final del trimestre"
+  termini: {tipus: trimestral, trimestres: [1, 2, 3], abans_de: true}
+  aplica: {poblacio_max: 5000}
+  contingut:
+    - "Apartat 7: pla de tresoreria (cobraments i pagaments mensuals, mínim de tresoreria), deute viu i venciments"
+    - "Apartat 8: PMP global trimestral, ràtio d'operacions pagades i pendents, amb sèrie històrica"
+    - "La resta de l'art. 16 (execució, morositat, SEC…) NO s'ha de trametre en aquests trimestres (art. 16.10)"
+  consequencies: "art. 19 OM; PMP > 30 dies: art. 13.6 i 18.5 LOEPSF (pla de tresoreria amb mesures, art. 11 bis OM; retenció de la PIE)"
+  confianca: alta
+
+MIN_TRIMESTRAL_COMPLET:
+  nom: Informació trimestral completa (1r a 3r trimestre)
+  titol_periode: "{p}"
+  organisme: Ministeri d'Hisenda
+  ambit: estatal
+  canal: Oficina Virtual EELL (Ministeri d'Hisenda)
+  fonament: "art. 16 OM HAP/2105/2012"
+  text_termini: "Abans del darrer dia del mes següent al final del trimestre"
+  termini: {tipus: trimestral, trimestres: [1, 2, 3, 4], abans_de: true}
+  aplica: {poblacio_min: 5001}
+  contingut: ["Tot el contingut de l'art. 16 (no aplica a municipis ≤ 5.000 h en els trimestres 1-3)"]
+  consequencies: "art. 19 OM"
+  confianca: alta
+
+MIN_PEF:
+  nom: Pla economicofinancer aprovat
+  titol_periode: "PEF {exp}"
+  organisme: Ministeri d'Hisenda
+  ambit: estatal
+  canal: Oficina Virtual EELL (Ministeri d'Hisenda)
+  fonament: "art. 9.2 OM HAP/2105/2012; arts. 21 i 23 LOEPSF"
+  text_termini: "5 dies naturals des de l'aprovació pel Ple"
+  termini: {tipus: esdeveniment, event: aprovacio_pef, dies: 5}
+  aplica: {condicional: true}
+  contingut:
+    - "PEF amb mesures quantificades i data d'implementació; ajustos SEC i coherència amb el límit de la regla de despesa"
+    - "Evolució del deute, estalvi brut i net, saldos de tresoreria, excés de finançament afectat i RTDG (art. 9.2.c OM)"
+  consequencies: "art. 19 OM; art. 25 LOEPSF si no s'aprova o no es compleix"
+  notes: "El seguiment de l'art. 9.3 OM és per a les entitats sota tutela de l'Estat; aquí la tutela és de la Generalitat"
+  confianca: alta
+
+MIN_OPERACIO_ENDEUTAMENT:
+  nom: Comunicació d'operació de crèdit (formalització, modificació o cancel·lació)
+  titol_periode: "{exp} · {event}"
+  organisme: Ministeri d'Hisenda
+  ambit: estatal
+  canal: Oficina Virtual EELL — Central d'Informació de Riscos de les EELL (CIR Local)
+  fonament: "art. 17 OM HAP/2105/2012"
+  text_termini: "Termini màxim d'un mes des de la subscripció, cancel·lació o modificació"
+  termini: {tipus: esdeveniment, event: [formalitzacio_operacio, cancellacio_operacio], mesos: 1}
+  aplica: {condicional: true}
+  contingut: ["Condicions de l'operació i quadre d'amortització"]
+  consequencies: "art. 19 OM"
+  confianca: alta
+
+# ═════════════════════════════ COMUNITAT AUTÒNOMA · Generalitat de Catalunya ═════════════════════════════
+# Canal comú: EACAT (art. 13 Ordre ECF/138/2007). L'incompliment pot comportar la suspensió dels pagaments
+# de subvencions i transferències de la Generalitat (web «Hisendes locals»; Inventari públic de compliment).
+
+GEN_PRESSUPOST:
+  nom: Pressupost aprovat o prorrogat, amb les modificacions (Presidència)
+  titol_periode: "Pressupost {p}"
+  organisme: Generalitat — Departament de la Presidència (Administració Local)
+  ambit: autonomic
+  canal: EACAT — aplicació de tramesa d'informació pressupostària (TIPGAH)
+  fonament: "art. 169.4 TRLRHL; web «Hisendes locals» de la Generalitat"
+  text_termini: "Fins al 31 de març de l'exercici"
+  termini: {tipus: anual, mes: 3, dia: 31, offset_any: 0, abans_de: false}
+  contingut: ["Pressupost aprovat o prorrogat de l'exercici, amb les modificacions corresponents"]
+  consequencies: "Suspensió de pagaments de subvencions i transferències de la Generalitat"
+  notes: "Verificar cada any a EACAT la data que fixa la convocatòria de la tramesa"
+  confianca: mitjana
+
+GEN_LIQUIDACIO:
+  nom: Liquidació del pressupost (Presidència)
+  titol_periode: "Liquidació {p}"
+  organisme: Generalitat — Departament de la Presidència (Administració Local)
+  ambit: autonomic
+  canal: EACAT — aplicació de tramesa d'informació pressupostària (TIPGAH)
+  fonament: "art. 193.5 TRLRHL; web «Hisendes locals» de la Generalitat"
+  text_termini: "Fins al 31 de març de l'exercici següent"
+  termini: {tipus: anual, mes: 3, dia: 31, offset_any: 1, abans_de: false}
+  contingut: ["Liquidació del pressupost de l'exercici anterior"]
+  consequencies: "Suspensió de pagaments de subvencions i transferències de la Generalitat"
+  confianca: mitjana
+
+GEN_ESTAT_DEUTE:
+  nom: Estat del deute a 31 de desembre (models ED-0, ED-1, ED-2)
+  titol_periode: "Deute a 31/12/{p}"
+  organisme: Generalitat — Departament d'Economia i Finances (DGPFAT)
+  ambit: autonomic
+  canal: EACAT — formulari 15
+  fonament: "art. 12 Ordre ECF/138/2007"
+  text_termini: "Durant el primer semestre de l'exercici següent"
+  termini: {tipus: anual, mes: 6, dia: 30, offset_any: 1, abans_de: false}
+  contingut: ["ED-0 Dades generals; ED-1 Estat del deute: crèdits; ED-2 Avals de crèdits"]
+  consequencies: "Suspensió de pagaments; la informació de deute condiciona la tramitació d'operacions futures"
+  notes: "Amb deute viu zero, confirmar a EACAT si cal trametre el formulari amb import zero (criteri recomanat: sí)"
+  confianca: alta
+
+GEN_OPERACIO_CURT:
+  nom: Comunicació d'operació de tresoreria (models CT-0 i CT-1)
+  titol_periode: "{exp}"
+  organisme: Generalitat — Departament d'Economia i Finances (DGPFAT)
+  ambit: autonomic
+  canal: EACAT
+  fonament: "art. 5.1 Ordre ECF/138/2007"
+  text_termini: "Els deu primers dies del mes següent al de la formalització"
+  termini: {tipus: esdeveniment, event: formalitzacio_operacio_tresoreria, dia_mes_seguent: 10}
+  aplica: {condicional: true}
+  contingut: ["CT-0 Dades generals; CT-1 Operació de tresoreria"]
+  consequencies: "Règim de tutela financera; la ràtio de tresoreria no pot superar el 30 % (art. 5.2)"
+  confianca: alta
+
+GEN_OPERACIO_LLARG:
+  nom: Comunicació d'operació de crèdit a llarg termini no subjecta a autorització
+  titol_periode: "{exp}"
+  organisme: Generalitat — Departament d'Economia i Finances (DGPFAT)
+  ambit: autonomic
+  canal: EACAT
+  fonament: "art. 4.1 Ordre ECF/138/2007"
+  text_termini: "Els deu primers dies del mes següent al de la formalització"
+  termini: {tipus: esdeveniment, event: formalitzacio_operacio_llarg, dia_mes_seguent: 10}
+  aplica: {condicional: true}
+  contingut: ["Documentació de les sis primeres lletres de l'art. 3.2 (models CL)"]
+  consequencies: "Si l'estalvi net és negatiu o el deute viu > 75 %, cal autorització prèvia (art. 3)"
+  confianca: alta
+
+GEN_PEF:
+  nom: Tramesa del pla economicofinancer
+  titol_periode: "PEF {exp}"
+  organisme: Generalitat — Departament d'Economia i Finances (DGPFAT)
+  ambit: autonomic
+  canal: EACAT
+  fonament: "Ordre ECF/138/2007, art. 10 (nota) i annex 2, apartat 5; art. 23 LOEPSF"
+  text_termini: "L'Ordre no fixa termini; s'aplica per analogia el de 5 dies de l'art. 9.2 OM HAP/2105/2012"
+  termini: {tipus: esdeveniment, event: aprovacio_pef, dies: 5}
+  aplica: {condicional: true}
+  contingut: ["PEF aprovat pel Ple; municipi de règim comú: comunicació, no aprovació de la tutela"]
+  consequencies: "Règim de tutela financera"
+  confianca: mitjana
+
+# ═════════════════════════════ ÒRGANS DE CONTROL EXTERN ═════════════════════════════
+
+SIN_COMPTE_GENERAL:
+  nom: Rendició del Compte General
+  titol_periode: "Compte General {p}"
+  organisme: Sindicatura de Comptes de Catalunya
+  ambit: control_extern
+  canal: Portal de rendició de comptes de les entitats locals (plataforma compartida, via EACAT)
+  fonament: "art. 212.5 TRLRHL"
+  text_termini: "Abans del 15 d'octubre de l'exercici següent"
+  termini: {tipus: anual, mes: 10, dia: 15, offset_any: 1, abans_de: true}
+  contingut: ["Compte General aprovat pel Ple, amb la documentació complementària"]
+  consequencies: "Requeriments de la Sindicatura; menció als informes de fiscalització; algunes línies d'ajuts exigeixen haver rendit comptes"
+  confianca: alta
+
+SIN_218_3:
+  nom: Acords contraris a objeccions, omissions de fiscalització i anomalies d'ingressos
+  titol_periode: "Exercici {p}"
+  organisme: Sindicatura de Comptes de Catalunya
+  ambit: control_extern
+  canal: EACAT — tràmit de la Sindicatura
+  fonament: "art. 218.3 TRLRHL; instrucció de la Sindicatura"
+  text_termini: "Fins al 30 d'abril de l'exercici següent"
+  termini: {tipus: anual, mes: 4, dia: 30, offset_any: 1, abans_de: false}
+  contingut: ["Relació d'acords i resolucions contraris a objeccions, omissions i anomalies; si no n'hi ha, certificació negativa"]
+  consequencies: "Requeriment de la Sindicatura"
+  notes: "Exercici 2025: control intern sense objeccions ni omissions → certificació negativa"
+  confianca: alta
+
+IGAE_INFORME_RESUM:
+  nom: Informe resum dels resultats del control intern
+  titol_periode: "Exercici {p}"
+  organisme: Intervenció General de l'Administració de l'Estat (IGAE)
+  ambit: control_extern
+  canal: Aplicació de l'IGAE per a les entitats locals
+  fonament: "art. 37.2 RD 424/2017; art. 213 TRLRHL"
+  text_termini: "En el curs del primer quadrimestre de l'exercici següent (també al Ple, a través de la Presidència)"
+  termini: {tipus: anual, mes: 4, dia: 30, offset_any: 1, abans_de: false}
+  contingut: ["Informe resum de la funció interventora i del control financer; el pla d'acció s'aprova després (art. 38)"]
+  consequencies: "Incompliment del RD 424/2017"
+  confianca: alta
+
+# ═════════════════════════════ FITES INTERNES QUE CONDICIONEN LES TRAMESES ═════════════════════════════
+
+INT_PRESSUPOST_APROVACIO:
+  nom: Aprovació definitiva del pressupost
+  titol_periode: "Pressupost {p}"
+  organisme: Ple
+  ambit: intern
+  canal: Ple i BOPT
+  fonament: "art. 169.2 TRLRHL"
+  text_termini: "Abans del 31 de desembre de l'any anterior"
+  termini: {tipus: anual, mes: 12, dia: 31, offset_any: -1, abans_de: true}
+  contingut: ["Aprovació definitiva i publicació resumida per capítols al BOPT"]
+  consequencies: "Pròrroga automàtica del pressupost anterior (art. 169.6 TRLRHL)"
+  confianca: alta
+
+INT_LIQUIDACIO_APROVACIO:
+  nom: Aprovació de la liquidació
+  titol_periode: "Liquidació {p}"
+  organisme: Alcaldia
+  ambit: intern
+  canal: Decret d'Alcaldia i donar-ne compte al Ple
+  fonament: "art. 191.3 TRLRHL; art. 90 RD 500/1990"
+  text_termini: "Abans del primer dia del mes de març de l'exercici següent"
+  termini: {tipus: anual, mes: 3, dia: 1, offset_any: 1, abans_de: true}
+  contingut: ["Decret de liquidació amb informe d'Intervenció i informe d'estabilitat"]
+  consequencies: "Condiciona la tramesa al Ministeri (31/3) i, si hi ha incompliments, el termini del PEF"
+  confianca: alta
+
+INT_CG_COMISSIO:
+  nom: Compte General a la Comissió Especial de Comptes
+  titol_periode: "Compte General {p}"
+  organisme: Comissió Especial de Comptes
+  ambit: intern
+  canal: Comissió Especial de Comptes, exposició pública (15 dies + 8)
+  fonament: "art. 212.2 i 212.3 TRLRHL; arts. 20.1.e i 116 LBRL"
+  text_termini: "Abans de l'1 de juny de l'exercici següent (rendició per la Presidència abans del 15 de maig)"
+  termini: {tipus: anual, mes: 6, dia: 1, offset_any: 1, abans_de: true}
+  contingut: ["Informe de la Comissió Especial de Comptes i exposició pública"]
+  consequencies: "Retarda l'aprovació pel Ple (1/10) i la rendició (15/10)"
+  notes: "La Comissió Especial de Comptes és obligatòria a tots els municipis (art. 20.1.e LBRL), encara que no hi hagi comissions informatives"
+  confianca: alta
+
+INT_CG_PLE:
+  nom: Aprovació del Compte General pel Ple
+  titol_periode: "Compte General {p}"
+  organisme: Ple
+  ambit: intern
+  canal: Ple
+  fonament: "art. 212.4 TRLRHL"
+  text_termini: "Abans de l'1 d'octubre de l'exercici següent"
+  termini: {tipus: anual, mes: 10, dia: 1, offset_any: 1, abans_de: true}
+  contingut: ["Acord plenari d'aprovació del Compte General"]
+  consequencies: "Condiciona la rendició a la Sindicatura (15/10) i la còpia al Ministeri (31/10)"
+  confianca: alta
+
+INT_PEF_PRESENTACIO:
+  nom: Presentació del PEF
+  titol_periode: "PEF {exp}"
+  organisme: Ple
+  ambit: intern
+  canal: Ple
+  fonament: "art. 23.1 LOEPSF"
+  text_termini: "Un mes des de la constatació de l'incompliment (aprovació de la liquidació)"
+  termini: {tipus: esdeveniment, event: constatacio_pef, mesos: 1}
+  aplica: {condicional: true}
+  contingut: ["Presentació del PEF al Ple"]
+  consequencies: "Mesures coercitives de l'art. 25 LOEPSF"
+  confianca: alta
+
+INT_PEF_POSADA_EN_MARXA:
+  nom: Aprovació i posada en marxa del PEF
+  titol_periode: "PEF {exp}"
+  organisme: Ple
+  ambit: intern
+  canal: Ple
+  fonament: "art. 23.1 LOEPSF"
+  text_termini: "Aprovació en dos mesos des de la presentació; posada en marxa en tres mesos des de la constatació"
+  termini: {tipus: esdeveniment, event: constatacio_pef, mesos: 3}
+  aplica: {condicional: true}
+  contingut: ["Aprovació pel Ple i inici de l'aplicació de les mesures"]
+  consequencies: "Mesures coercitives de l'art. 25 LOEPSF"
+  confianca: alta

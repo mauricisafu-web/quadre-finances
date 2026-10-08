@@ -1,0 +1,57 @@
+{
+  "$fitxa": "torre-finances/expedient@1",
+  "entitat": { "nif": "P4315400D" },
+  "tipus": "operacio_credit",
+  "expedient": {
+    "num": "4315200000-2026-0000738",
+    "exercici": 2026,
+    "titol": "Pòlissa de crèdit (operació de tresoreria) de 275.000 €",
+    "estat_tramit": "en_tramit",
+    "organ": "ple",
+    "fites": [
+      { "fita": "informe_tresoreria_prudencia", "estat": "fet", "document": "03 Informe de Tresoreria de prudència financera" },
+      { "fita": "informe_intervencio_cpp", "estat": "fet", "document": "04 Informe CPP.E02.001 (favorable)" },
+      { "fita": "anunci_seu_electronica", "estat": "fet", "document": "06 Anunci a la seu electrònica" },
+      { "fita": "invitacio_caixabank", "estat": "fet", "document": "07 Invitació" },
+      { "fita": "acord_ple", "data": "2026-09-24", "estat": "fet", "document": "10 Certificat de l'acord del Ple" },
+      { "fita": "oferta_entitat", "estat": "pendent" },
+      { "fita": "informe_intervencio_tae", "estat": "pendent" },
+      { "fita": "decret_adjudicacio_formalitzacio", "estat": "pendent" },
+      { "fita": "donar_compte_ple", "estat": "pendent" },
+      { "fita": "publicacio_bopt_delegacio", "estat": "pendent" }
+    ]
+  },
+  "font": {
+    "origen": "claude_code",
+    "generat_el": "2026-09-24T17:00:00+02:00",
+    "fitxers": [ { "ruta": "liquidació/Pòlissa de crèdit/Expedient 4315200000-2026-0000738/" } ]
+  },
+  "dades": {
+    "classe": "tresoreria",
+    "import": 275000.00,
+    "termini_mesos": 12,
+    "tipus_interes": { "modalitat": "variable", "index": "EURIBOR_12M", "diferencial_pct": null },
+    "amortitzacio": "Única al venciment",
+    "liquidacio_interessos": "Anual",
+    "base_ratio": { "ingressos_corrents": 1291602.94, "exercici_base": 2025 },
+    "ratio_pct": 21.2914,
+    "llindar_competencia_pct": 15,
+    "competencia": "ple",
+    "fonament_competencia": "art. 52.2 TRLRHL; art. 22.2.m LBRL",
+    "limit_art51_pct": 30,
+    "prudencia": {
+      "resolucio": "Resolució de 8/9/2026 (BOE 11/9/2026), annex 1",
+      "elegible_fie": false,
+      "cost_total_maxim": { "index": "EURIBOR_12M", "diferencial_pct": 0.45, "index_valor_pct": 3.218, "data_index": "2026-09-23", "total_pct": 3.668 },
+      "cost_total_maxim_si_regularitza": { "index": "EURIBOR_12M", "diferencial_pct": 0.20 }
+    },
+    "delegacio": { "organ_delegat": "alcaldia", "condicio": "TAE ≤ cost total màxim, acreditat per la Intervenció", "data_acord_ple": "2026-09-24" },
+    "ofertes": [],
+    "formalitzacio": {},
+    "comunicacions": []
+  },
+  "pendents": [
+    { "camp": "ofertes", "motiu": "Pendent de rebre l'oferta de CaixaBank (invitació amb termini de 10 dies naturals)" },
+    { "camp": "formalitzacio", "motiu": "Decret d'adjudicació i formalització pendent" }
+  ]
+}

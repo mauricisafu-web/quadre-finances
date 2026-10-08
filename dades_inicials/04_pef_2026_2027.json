@@ -1,0 +1,46 @@
+{
+  "$fitxa": "torre-finances/expedient@1",
+  "entitat": { "nif": "P4315400D" },
+  "tipus": "pef",
+  "expedient": {
+    "num": null,
+    "exercici": 2026,
+    "titol": "Pla economicofinancer 2026-2027",
+    "estat_tramit": "esborrany",
+    "organ": "ple"
+  },
+  "font": {
+    "origen": "claude_code",
+    "generat_el": "2026-09-24T17:00:00+02:00",
+    "fitxers": [ { "ruta": "liquidació/PEF 2026-2027/" } ]
+  },
+  "dades": {
+    "exercicis": [2026, 2027],
+    "causa": "Incompliment de la regla de despesa 2025 derivat principalment de l'ús del RTDG i de l'excés de finançament afectat (causa conjuntural, opció B del model)",
+    "constatacio": { "exercici_incompliment": 2025, "regles_incomplertes": ["regla_despesa"], "data_constatacio": null },
+    "quantificacio": {
+      "exces": 176245.38,
+      "deduccio_rtdg": 105422.08,
+      "deduccio_exces_afectat": 27845.49,
+      "import_a_corregir": 42977.81,
+      "fonament_deduccio": "art. 4 RDL 13/2026, de 2 de juny (BOE-A-2026-11848): excepció parcial",
+      "criteri_confirmat_tutela": false
+    },
+    "trajectoria": [
+      { "exercici": 2026, "capacitat_financament": 173130.89, "es_projeccio": true }
+    ],
+    "mesures": [
+      { "codi": "M1", "descripcio": "Compromís sobre l'ús del RTDG", "tipus": "no_quantificada" },
+      { "codi": "M2", "descripcio": "No concertar deute a llarg termini", "tipus": "no_quantificada" },
+      { "codi": "M3", "descripcio": "Finançar les incorporacions amb excés de finançament afectat", "tipus": "no_quantificada" },
+      { "codi": "M4", "descripcio": "Seguiment trimestral de l'execució", "tipus": "no_quantificada" }
+    ],
+    "tramit": {}
+  },
+  "pendents": [
+    { "camp": "constatacio.data_constatacio", "motiu": "Depèn de la data del decret de liquidació 2025" },
+    { "camp": "trajectoria", "motiu": "Projeccions 2026 i 2027 pendents (només hi ha la capacitat de finançament 2026)" },
+    { "camp": "parametres.TAXA_REFERENCIA_REGLA_DESPESA.2026", "motiu": "Taxa de referència del PIB per a 2026 pendent" },
+    { "camp": "quantificacio.criteri_confirmat_tutela", "motiu": "Base corregida 1.136.580,67 €: criteri a confirmar amb la tutela" }
+  ]
+}

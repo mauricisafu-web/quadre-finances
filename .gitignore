@@ -1,0 +1,22 @@
+# Dades reals: MAI versionar
+dades/
+*.db
+*.db-wal
+*.db-shm
+registre/
+safata/entrada/*
+safata/processades/*
+safata/rebutjades/*
+!safata/**/.gitkeep
+sortida/
+
+# Configuració local (rutes i carpetes de còpia)
+config.ini
+
+# Python
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+*.log

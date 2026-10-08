@@ -1,0 +1,12 @@
+; Copia aquest fitxer com a config.ini i adapta'l.
+
+[rutes]
+; Base de dades: SEMPRE en disc local, mai dins d'una carpeta sincronitzada per OneDrive.
+; bd = C:\Users\secretari\quadre-finances\dades\finances.db
+
+; Carpetes de còpia de seguretat, separades per punt i coma (es conserven les 30 darreres).
+copies = C:\Users\secretari\OneDrive - AJUNTAMENT DE LA TORRE DE L'ESPANYOL\Còpies quadre-finances;\\servidor2012\E\ARXIU\quadre-finances
+
+[remissio]
+; Primer dia des del qual el calendari mostra venciments.
+des_de = 2026-01-01

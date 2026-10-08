@@ -1,0 +1,60 @@
+{
+  "$fitxa": "torre-finances/expedient@1",
+  "entitat": { "nif": "P4315400D" },
+  "tipus": "liquidacio",
+  "expedient": {
+    "num": null,
+    "exercici": 2024,
+    "titol": "Liquidació del pressupost 2024",
+    "estat_tramit": "aprovat",
+    "organ": "alcaldia",
+    "resolucio": { "num": "2025-0000144", "data": "2025-06-11", "organ": "alcaldia" }
+  },
+  "font": {
+    "origen": "claude_code",
+    "generat_el": "2026-09-24T17:00:00+02:00",
+    "fitxers": [ { "ruta": "Decret 2025-0000144, d'11/06/2025 (transcripció al traspàs de Cowork)" } ]
+  },
+  "dades": {
+    "execucio_ingressos": { "drn": 1777231.18, "font_ref": "Decret 2025-0000144" },
+    "execucio_despeses": { "orn": 1462336.02, "font_ref": "Decret 2025-0000144" },
+    "resultat_pressupostari": {
+      "rp": 314895.16,
+      "ajust_despeses_rtdg": 89069.59,
+      "ajust_desviacions_negatives": 43254.87,
+      "ajust_desviacions_positives": 154328.25,
+      "rp_ajustat": 292891.37,
+      "font_ref": "Decret 2025-0000144"
+    },
+    "romanent_tresoreria": {
+      "fons_liquids": 229964.51,
+      "drets_pendents_total": 490784.35,
+      "obligacions_pendents_total": 152401.49,
+      "partides_pendents_aplicacio": null,
+      "rt_total": 554914.59,
+      "saldos_dubtos_cobrament": 195810.06,
+      "exces_financament_afectat": 30183.58,
+      "rtdg": 328920.95,
+      "saldo_413": 7004.27,
+      "rtdg_ajustat": 321916.68,
+      "font_ref": "Decret 2025-0000144"
+    },
+    "romanents_credit": { "total": 714165.69 },
+    "estabilitat": { "capacitat_financament": 312979.47 },
+    "regla_despesa": { "marge": 34809.76, "compleix": true },
+    "estalvi_net": {
+      "ingressos_corrents": 1468517.79,
+      "ingressos_extraordinaris": 157626.22,
+      "ingressos_corrents_ajustats": 1310891.57,
+      "estalvi_net": 338500.38,
+      "estalvi_net_ajustat": 174772.91,
+      "calculats": ["estalvi_net"]
+    },
+    "endeutament": { "deute_viu_total": 0.00, "ratio_deute_viu_pct": 0 },
+    "pmp": { "pmp_dies": 8.61 }
+  },
+  "pendents": [
+    { "camp": "romanent_tresoreria.partides_pendents_aplicacio", "motiu": "No consta al traspàs; cal llegir-lo de l'estat del romanent del Decret 2025-0000144" },
+    { "camp": "expedient.num", "motiu": "Número d'expedient del gestor no disponible al traspàs" }
+  ]
+}

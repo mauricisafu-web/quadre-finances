@@ -1,0 +1,8 @@
+# Quadre de comandament financer — dependències amb versió fixada (provades 24/09/2026).
+# Per actualitzar-les: pujar el número, reinstal·lar i passar `python -m pytest`.
+pydantic==2.13.5          # models de la fitxa i generació de l'esquema JSON
+PyYAML==6.0.3             # catàlegs (magnituds, obligacions, paràmetres)
+plotly==7.1.0             # gràfics (plotly.js s'incrusta al HTML, sense CDN)
+openpyxl==3.1.5           # extractor de l'Excel de comprovacions ABSIS (fase 2)
+mcp==2.2.0                # servidor MCP local finances-torre
+pytest==9.1.1             # proves amb els valors d'or 2024-2025

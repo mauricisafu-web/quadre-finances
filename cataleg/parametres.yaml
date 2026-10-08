@@ -1,0 +1,20 @@
+# Paràmetres normatius amb vigència. Cap llindar s'escriu al codi: es llegeix d'aquí.
+# Quan canviï una norma, s'afegeix una fila amb el nou `des_de`; no s'esborra l'anterior.
+
+LLINDAR_DEUTE_SENSE_AUTORITZACIO:
+  - {valor: 75, des_de: 2011-12-31, font: "DA 14a RDL 20/2011 (vigència indefinida per la DF 31a Llei 17/2012)"}
+LLINDAR_DEUTE_MAXIM:
+  - {valor: 110, des_de: 2011-12-31, font: "art. 53.2 TRLRHL; DA 14a RDL 20/2011"}
+LIMIT_OPERACIONS_TRESORERIA_PCT:
+  - {valor: 30, des_de: 2004-03-09, font: "art. 51 TRLRHL; art. 5.2 Ordre ECF/138/2007"}
+LLINDAR_COMPETENCIA_PLE_TRESORERIA_PCT:
+  - {valor: 15, des_de: 2004-03-09, font: "art. 52.2 TRLRHL; art. 22.2.m LBRL"}
+LLINDAR_COMPETENCIA_PLE_LLARG_PCT:
+  - {valor: 10, des_de: 2004-03-09, font: "art. 52.2 TRLRHL; art. 21.1.f LBRL (recursos ordinaris)"}
+PMP_MAXIM_DIES:
+  - {valor: 30, des_de: 2014-07-30, font: "art. 13.6 LOEPSF; RD 635/2014"}
+TAXA_REFERENCIA_REGLA_DESPESA:
+  - {valor: 3.2, des_de: 2025-01-01, fins: 2025-12-31, font: "Taxa aplicada a l'expedient de liquidació 2025 (4315200000-2026-0000642)"}
+  # 2026: PENDENT (vegeu traspàs, §5)
+POBLACIO_EXEMPCIO_TRIMESTRAL:
+  - {valor: 5000, des_de: 2014-11-08, font: "art. 16.10 OM HAP/2105/2012 (text consolidat BOE, actualització 26/12/2025)"}
